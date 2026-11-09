@@ -180,8 +180,8 @@ roxi@shin-md:~$ neofetch --perfil
 <img src="assets/pie.svg" width="100%" alt="Transformando lógica en estética, un commit a la vez"/>
 
 <!--
-  Las piezas de assets/ (hero, divisor, pie y tarjetas) se dibujan solas:
-      python3 tools/build_assets.py
+  Las piezas de assets/ (hero, divisor, pie, lenguajes y tarjetas) se dibujan
+  solas, con código:  python3 tools/build_assets.py   (ver tools/LEEME.md)
   El texto va convertido a trazado vectorial, así que se ven igual en cualquier
   navegador o móvil, sin depender de fuentes instaladas.
   Las ilustraciones de assets/anime/ son originales de este repositorio.
