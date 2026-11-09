@@ -179,6 +179,33 @@ def sakura(c, cx, cy, radio, color, centro=None, giro=0.0, opacidad=None, estamb
     )
 
 
+def petalo_que_cae(c, cx, cy, radio, color, giro=0.0, duracion=11.0, deriva=26.0,
+                   caida=34.0, retraso=0.0, opacidad=None):
+    """Un pétalo que se mece y baja despacio. Usa SMIL dentro del propio SVG,
+    que es lo único que se anima cuando la imagen se sirve como <img>."""
+    import random
+
+    azar = random.Random(int(cx * 7 + cy * 13 + duracion * 31))
+    giro_final = giro + azar.choice([-1, 1]) * azar.uniform(60, 160)
+    cuerpo = _petalo_svg(radio, color, 0, opacidad)
+    anim = (
+        '<animateTransform attributeName="transform" type="translate" '
+        'values="0 0; %(dx)s %(dy1)s; %(d0)s %(dy2)s; 0 0" dur="%(dur)ss" '
+        'begin="%(ret)ss" repeatCount="indefinite" calcMode="spline" '
+        'keyTimes="0;0.35;0.7;1" keySplines="0.42 0 0.58 1;0.42 0 0.58 1;0.42 0 0.58 1"/>'
+        '<animateTransform attributeName="transform" type="rotate" additive="sum" '
+        'values="0;%(g1)s;%(g2)s;0" dur="%(dur)ss" begin="%(ret)ss" '
+        'repeatCount="indefinite"/>'
+        % dict(dx=formato(deriva), dy1=formato(caida * 0.55), d0=formato(-deriva * 0.35),
+               dy2=formato(caida), dur=formato(duracion), ret=formato(retraso),
+               g1=formato(giro_final * 0.5), g2=formato(giro_final))
+    )
+    return c.agrega(
+        '<g transform="translate(%s %s) rotate(%s)"><g>%s%s</g></g>'
+        % (formato(cx), formato(cy), formato(giro), anim, cuerpo)
+    )
+
+
 def lluvia(c, ancho, alto, cuantas=18, semilla=7, colores=None, radio=(5, 13),
            desde=0.0, hasta=None, opacidad=(0.25, 0.7)):
     """Pétalos repartidos por el lienzo. Determinista: misma semilla, mismo dibujo."""
