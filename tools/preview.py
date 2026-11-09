@@ -21,13 +21,14 @@ RAIZ = os.path.dirname(AQUI)
 sys.path.insert(0, AQUI)
 
 PIEZAS = [
-    ("assets/hero.svg", 1200),
+    ("assets/portada.svg", 1200),
     ("assets/divisor.svg", 1200),
     ("assets/cards/shin-md.svg", 580),
     ("assets/cards/shin-md-go.svg", 580),
     ("assets/cards/kuroxi-platform.svg", 580),
     ("assets/cards/lab2experimental.svg", 580),
     ("assets/cards/ginko-covers.svg", 580),
+    ("assets/destacado.svg", 1200),
     ("assets/lenguajes.svg", 1200),
     ("assets/pie.svg", 1200),
 ]
