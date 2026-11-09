@@ -19,10 +19,6 @@
 
 ## 🌸 Sobre mí
 
-<table>
-  <tr>
-    <td width="62%" valign="top">
-
 Soy **Roxi** `riokuroxi-svg`, desarrollador y arquitecto de software desde
 **México** 🇲🇽. Mi trabajo es convertir bots de mensajería en sistemas que
 **aguantan**: procesos que se separan en lugar de caerse juntos, memoria que vive
@@ -49,13 +45,6 @@ en el momento, sin pedir permiso a una API.
     <img src="https://img.shields.io/badge/Ko--fi-invitarme_un_café-F2BE6B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi"/>
   </a>
 </p>
-
-  </td>
-    <td width="38%" align="center" valign="middle">
-      <img src="assets/anime/prado.jpg" width="100%" alt="Ilustración: un prado de margaritas al amanecer" style="border-radius:18px"/>
-    </td>
-  </tr>
-</table>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
@@ -103,7 +92,7 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 | **Herramientas** | `Bash` POSIX puro para los instaladores · `systemd` para el servicio · `Docker` |
 | **Calidad** | runner de pruebas propio · `tsc` sobre JSDoc · cero errores de lint o no entra |
 
-<img src="assets/anime/tira.jpg" width="100%" alt="Ilustración: la mesa de trabajo de noche" style="border-radius:18px"/>
+<img src="assets/anime/prado.jpg" width="100%" alt="Ilustración: un prado de margaritas al amanecer" style="border-radius:18px"/>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
@@ -138,7 +127,7 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 - 🎧 **Sonando:** openings de los 2000 y lo-fi para las horas raras.
 - 🌙 **Se programa de noche.** La mejor hora para cazar un `EEXIST` es cuando ya
   no hay nadie mirando.
-- 🍵 **Café de olla**, no espresso. Y sí, hay una taza en cada ilustración.
+- 🍵 **Café de olla**, no espresso. La taza aparece en cuanto uno se descuida.
 - 🐈‍⬛ **Supervisor de calidad:** un gato negro que aprueba las releases caminando
   sobre el teclado.
 - 📝 **Si algo no está escrito, no existe.** Por eso cada proyecto trae su guía
