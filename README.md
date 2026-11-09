@@ -1,23 +1,27 @@
 <div align="center">
 
-<img src="assets/hero.svg" width="100%" alt="Rioxuroxi — arquitecto de software, bots autónomos y memoria local"/>
+<img src="assets/portada.svg" width="100%" alt="Rioxuroxi — Roxi, arquitecto de software: bots autónomos, memoria local y anti-ban nativo"/>
 
 <p>
   <a href="#-sobre-mí">Sobre mí</a> ·
   <a href="#-proyectos">Proyectos</a> ·
   <a href="#-lo-que-uso">Stack</a> ·
-  <a href="#-en-números">Números</a> ·
+  <a href="#-ficha">Ficha</a> ·
   <a href="#-fuera-del-teclado">Fuera del teclado</a> ·
   <a href="#-hablemos">Hablemos</a>
 </p>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3200&pause=900&color=E4668F&center=true&vCenter=true&width=780&lines=Bots+de+WhatsApp+que+no+se+caen;Memoria+local%2C+sin+mandar+nada+a+un+servidor;Anti-ban+nativo+y+pruebas+que+se+ejecutan+de+verdad;Y+un+poco+de+sakura+en+la+terminal" alt=""/>
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=19&duration=3200&pause=900&color=E4668F&center=true&vCenter=true&width=760&lines=Bots+de+WhatsApp+que+no+se+caen;Memoria+local%2C+sin+mandar+nada+a+un+servidor;Anti-ban+nativo+y+pruebas+que+se+ejecutan+de+verdad;Y+un+poco+de+sakura+en+la+terminal" alt=""/>
 
 </div>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
 ## 🌸 Sobre mí
+
+<table>
+  <tr>
+    <td width="64%" valign="top">
 
 Soy **Roxi** `riokuroxi-svg`, desarrollador y arquitecto de software desde
 **México** 🇲🇽. Mi trabajo es convertir bots de mensajería en sistemas que
@@ -27,24 +31,24 @@ en el momento, sin pedir permiso a una API.
 
 - ⚙️ **Lo que hago:** núcleos de bots, colas de envío, anti-ban, memoria local
   con SQLite y un instalador que funciona igual en Termux, en un VPS y en Docker.
-- 🧠 **Cómo lo hago:** primero investigo —protocolo, incidencias, cómo lo resuelve
-  quien ya se estrelló— y después escribo. Cero código trampa, cero dependencias
-  que sobren.
+- 🧠 **Cómo lo hago:** primero investigo —protocolo, incidencias, cómo lo resolvió
+  quien ya se estrelló— y después escribo. Cero código trampa.
 - 🧪 **Cómo lo compruebo:** con pruebas que se ejecutan solas. Si una frase del
   README se puede medir, hay un archivo en `test/` que la mide.
 - 🇲🇽 **Dónde:** México, con café de olla y una playlist de openings de fondo.
 
 <p>
-  <a href="https://github.com/riokuroxi-svg/Shin-MD">
-    <img src="https://img.shields.io/badge/Shin--MD-v3.7.0-E4668F?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Shin-MD"/>
-  </a>
-  <a href="https://github.com/riokuroxi-svg?tab=repositories">
-    <img src="https://img.shields.io/badge/licencia-AGPL--3.0--only-6E4FB0?style=for-the-badge&logo=gnu&logoColor=white" alt="AGPL-3.0-only"/>
-  </a>
-  <a href="https://ko-fi.com/kuroxisvg">
-    <img src="https://img.shields.io/badge/Ko--fi-invitarme_un_café-F2BE6B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi"/>
-  </a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="https://img.shields.io/badge/Shin--MD-v3.7.0-E4668F?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Shin-MD"/></a>
+  <a href="https://github.com/riokuroxi-svg?tab=repositories"><img src="https://img.shields.io/badge/licencia-AGPL--3.0--only-6E4FB0?style=for-the-badge&logo=gnu&logoColor=white" alt="AGPL-3.0-only"/></a>
+  <a href="https://ko-fi.com/kuroxisvg"><img src="https://img.shields.io/badge/Ko--fi-invítame_un_café-F2BE6B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi"/></a>
 </p>
+
+  </td>
+    <td width="36%" align="center" valign="middle">
+      <img src="assets/anime/mascota.png" width="100%" alt="Mascota del perfil: chibi de pelo rosa con sudadera crema"/>
+    </td>
+  </tr>
+</table>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
@@ -80,11 +84,13 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 
 <br/><br/>
 
-<img src="https://raw.githubusercontent.com/riokuroxi-svg/riokuroxi-svg/main/assets/lenguajes.svg" width="100%" alt="JavaScript 77 %, Go 17 %, Shell 3 %, Python 2 %"/>
+<img src="assets/lenguajes.svg" width="100%" alt="JavaScript 77 %, Go 17 %, Shell 3 %, Python 2 %, Rust 2 %"/>
 
 </div>
 
-| Terreno | Con qué lo trabajo |
+<br/>
+
+| Terreno | Con qué |
 | :--- | :--- |
 | **Núcleo de bots** | `Node.js 22` (ESM, sin transpilar) · `Baileys` con parches propios · `whatsmeow` en Go |
 | **Memoria y datos** | `SQLite` en modo WAL · `FTS5` para búsqueda · respaldos que no se llevan los datos por delante |
@@ -92,26 +98,39 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 | **Herramientas** | `Bash` POSIX puro para los instaladores · `systemd` para el servicio · `Docker` |
 | **Calidad** | runner de pruebas propio · `tsc` sobre JSDoc · cero errores de lint o no entra |
 
-<img src="assets/anime/prado.jpg" width="100%" alt="Ilustración: un prado de margaritas al amanecer" style="border-radius:18px"/>
-
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
-## 📊 En números
+## 📇 Ficha
 
-<div align="center">
-
-|  |  |  |
-| :---: | :---: | :---: |
-| **213**<br/>comandos en Shin-MD | **353**<br/>pruebas en verde | **520**<br/>commits propios |
-| **13**<br/>repositorios | **2**<br/>lenguajes de verdad | **1**<br/>línea para instalar |
+<table>
+  <tr>
+    <td width="34%" valign="top"><b>Nombre</b><br/>Roxi · <code>riokuroxi-svg</code></td>
+    <td width="33%" valign="top"><b>Rol</b><br/>Arquitecto de software</td>
+    <td width="33%" valign="top"><b>Base</b><br/>México 🇲🇽</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Lenguajes de verdad</b><br/>JavaScript y Go</td>
+    <td valign="top"><b>Terreno</b><br/>Bots autónomos y memoria local</td>
+    <td valign="top"><b>Licencia</b><br/>AGPL-3.0-only</td>
+  </tr>
+  <tr>
+    <td valign="top"><b>Ahora</b><br/>Shin-MD v3.7.0 en producción</td>
+    <td valign="top"><b>Después</b><br/>El mismo núcleo en Go</td>
+    <td valign="top"><b>Invítame</b><br/><a href="https://ko-fi.com/kuroxisvg">Ko-fi</a></td>
+  </tr>
+</table>
 
 <br/>
+
+<div align="center">
 
 <a href="https://github.com/riokuroxi-svg/Shin-MD">
   <img src="assets/destacado.svg" width="100%" alt="Shin-MD — v3.7.0, 353 pruebas, AGPL-3.0-only, y el comando de instalación"/>
 </a>
 
 </div>
+
+<img src="assets/anime/prado.jpg" width="100%" alt="Ilustración: un prado de margaritas al amanecer" style="border-radius:18px"/>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
@@ -130,8 +149,8 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 - 🍵 **Café de olla**, no espresso. La taza aparece en cuanto uno se descuida.
 - 🐈‍⬛ **Supervisor de calidad:** un gato negro que aprueba las releases caminando
   sobre el teclado.
-- 📝 **Si algo no está escrito, no existe.** Por eso cada proyecto trae su guía
-  de instalación y su informe de lo que se rompió por el camino.
+- 📝 **Si algo no está escrito, no existe.** Por eso cada proyecto trae su guía de
+  instalación y su informe de lo que se rompió por el camino.
 
   </td>
   </tr>
@@ -141,7 +160,7 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 
 ```zsh
 roxi@shin-md:~$ neofetch --perfil
-        /\_/\        Sistema .... Debian y Termux
+        /\\_/\\        Sistema .... Debian y Termux
        ( o.o )       Núcleo ..... Shin-MD v3.7.0
         > ^ <        Memoria .... SQLite WAL · FTS5
                      Anti-ban ... jitter + aclimatación
@@ -169,9 +188,9 @@ roxi@shin-md:~$ neofetch --perfil
 <img src="assets/pie.svg" width="100%" alt="Transformando lógica en estética, un commit a la vez"/>
 
 <!--
-  Las piezas de assets/ (hero, divisor, pie, lenguajes y tarjetas) se dibujan
-  solas, con código:  python3 tools/build_assets.py   (ver tools/LEEME.md)
-  El texto va convertido a trazado vectorial, así que se ven igual en cualquier
-  navegador o móvil, sin depender de fuentes instaladas.
+  Las piezas de assets/ (portada, divisor, pie, lenguajes, destacado y tarjetas)
+  se dibujan solas, con código:  python3 tools/build_assets.py   (ver tools/LEEME.md)
+  El texto va convertido a trazado vectorial y la portada lleva su ilustración
+  dentro: se ve igual en cualquier navegador o móvil, sin depender de nada.
   Las ilustraciones de assets/anime/ son originales de este repositorio.
 -->
