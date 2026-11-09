@@ -23,7 +23,10 @@ from __future__ import annotations
 
 import sys
 
+import os
+
 import lienzo
+import svgkit
 from lienzo import P, Lienzo, formato
 
 BALOO = None
@@ -43,60 +46,68 @@ def cargar_fuentes():
 
 
 # ═══════════════════════════════════════════════════════════ la cabecera ══
-def hero():
-    """1200×340. El nombre grande, el kanji de la casa y petalos de fondo."""
-    ancho, alto = 1200, 340
-    c = Lienzo(ancho, alto, "Rioxuroxi · perfil")
+ARTE_PORTADA = ("assets", "anime", "portada-1200.jpg")
 
-    lienzo.fondos(c, ancho, alto)
-    # Luna de sakura, muy tenue, detrás de todo.
-    c.circulo(1050, 96, 132, P["sakura_palido"], opacidad=0.9)
-    c.circulo(1050, 96, 96, P["sakura"], opacidad=0.35)
 
-    # Ramas: tres flores de cerezo a distinta escala, recortadas por el borde.
-    lienzo.sakura(c, 1075, 96, 62, P["sakura"], P["blanco"], giro=12, opacidad=0.95)
-    lienzo.sakura(c, 1160, 210, 34, P["lila"], P["blanco"], giro=40, opacidad=0.75)
-    lienzo.sakura(c, 980, 250, 26, P["sakura_fuerte"], P["blanco"], giro=70, opacidad=0.5)
-    lienzo.lluvia(c, ancho, alto, cuantas=14, semilla=41, radio=(4, 9))
+def portada():
+    """1200×470. La ilustración con la tipografía encima.
 
-    # Tres pétalos que se mecen: es lo único que se mueve, y basta para que la
-    # cabecera se sienta viva sin distraer del nombre.
-    lienzo.petalo_que_cae(c, 862, 52, 11, P["sakura"], 20, duracion=12.0, retraso=0.4)
-    lienzo.petalo_que_cae(c, 792, 148, 8, P["lila"], 40, duracion=15.0, deriva=30,
-                          caida=42, retraso=1.6, opacidad=0.85)
-    lienzo.petalo_que_cae(c, 918, 262, 9, P["sakura_fuerte"], 70, duracion=13.0,
-                          deriva=-22, caida=30, retraso=3.0, opacidad=0.8)
+    El arte va **dentro** del SVG como data URI, no enlazado: cuando GitHub
+    sirve un SVG a través de su caché de imágenes, una ruta relativa deja de
+    resolver y la ilustración desaparecería. Así el archivo es autosuficiente.
+    """
+    ancho, alto = 1200, 470
+    c = Lienzo(ancho, alto, "Rioxuroxi — perfil")
 
-    # Antetítulo
-    lienzo.texto(c, QUICK, "PERFIL  ·  GITHUB", 15, 70, 84, P["lila_fuerte"], tracking=3.4)
+    ruta = os.path.join(os.path.dirname(lienzo.AQUI), *ARTE_PORTADA)
+    if not os.path.exists(ruta):
+        raise SystemExit("falta %s: ejecuta antes tools/preparar_arte.py" % ruta)
+    c.imagen(svgkit.uri_imagen(ruta), 0, 0, ancho, alto, r=0)
 
-    # Nombre, con degradado de sakura a lavanda
-    relleno = lienzo.degradado(c, "nombre", [P["sakura_fuerte"], P["lila_fuerte"]])
-    lienzo.texto(c, BALOO, "RIOKUROXI", 104, 66, 186, P["tinta"], relleno=relleno)
+    # Velo: un degradado con transparencia de verdad (stop-opacity), no una
+    # máscara: las máscaras no se pintan igual en todos los visores y esto
+    # tiene que verse bien en GitHub, en un móvil y en un navegador viejo.
+    c.defs_agrega(
+        '<linearGradient id="velo" x1="0" y1="0" x2="1" y2="0">'
+        '<stop offset="0" stop-color="#150A20" stop-opacity="0.93"/>'
+        '<stop offset="0.30" stop-color="#150A20" stop-opacity="0.88"/>'
+        '<stop offset="0.60" stop-color="#150A20" stop-opacity="0.30"/>'
+        '<stop offset="1" stop-color="#150A20" stop-opacity="0"/>'
+        "</linearGradient>"
+        '<linearGradient id="velo_pie" x1="0" y1="0" x2="0" y2="1">'
+        '<stop offset="0" stop-color="#150A20" stop-opacity="0"/>'
+        '<stop offset="1" stop-color="#150A20" stop-opacity="0.55"/>'
+        "</linearGradient>"
+    )
+    c.rect(0, 0, ancho, alto, 0, "url(#velo)")
+    c.rect(0, alto - 150, ancho, 150, 0, "url(#velo_pie)")
 
-    # Una raya y la descripción
-    c.linea(72, 212, 300, 212, P["sakura"], 3)
-    lienzo.texto(c, NUNITO, "Roxi — arquitecto de software. Bots autónomos, memoria local y nada de magia negra.",
-                 20, 72, 246, P["tinta_suave"])
+    # El nombre, en dos renglones como en las portadas
+    lienzo.texto(c, QUICK, "GITHUB  ·  PERFIL  ·  MÉXICO", 14, 64, 92, P["sakura"],
+                 tracking=4.2)
+    lienzo.texto(c, BALOO, "RIOKUROXI", 92, 60, 196, P["papel"])
+    lienzo.texto(c, BALOO, "Roxi", 58, 62, 262, P["sakura"])
 
-    # Pastillas
-    x = 70
+    c.linea(66, 288, 268, 288, P["sakura"], 2.5)
+    lienzo.texto(c, NUNITO, "Arquitecto de software · bots autónomos,", 19, 64, 320, "#E9DDEB")
+    lienzo.texto(c, NUNITO, "memoria local y anti-ban nativo.", 19, 64, 345, "#E9DDEB")
+
+    x = 64
     for txt, fondo, color in [
-        ("Shin-MD", P["sakura_palido"], P["sakura_fuerte"]),
-        ("local-first", P["lila_palido"], P["lila_fuerte"]),
-        ("México", P["ambar_palido"], "#B9832B"),
-        ("AGPL-3.0", P["menta_palido"], "#2F8A72"),
+        ("Shin-MD", P["sakura"], "#2A2340"),
+        ("353 pruebas", P["papel"], P["lila_fuerte"]),
+        ("AGPL-3.0-only", P["menta"], "#1E3B33"),
     ]:
-        x += lienzo.pastilla(c, QUICK, txt, x, 268, tam=15, fondo=fondo, color=color) + 12
+        x += lienzo.pastilla(c, QUICK, txt, x, 384, tam=14, fondo=fondo, color=color) + 10
 
-    # El kanji, en vertical y muy suave, en la esquina: la firma de la casa.
+    # Marca de agua: el kanji de la casa, abajo a la derecha, muy suave
     if CJK is not None:
-        lienzo.centrado(c, CJK, "反", 62, 932, 236, P["tinta"], opacidad=0.13)
-        lienzo.centrado(c, CJK, "魂", 62, 932, 300, P["tinta"], opacidad=0.13)
-    return lienzo.guardar(c, "assets", "hero.svg")
+        lienzo.derecha(c, CJK, "反魂", 34, ancho - 54, alto - 34, P["papel"], opacidad=0.28)
+    lienzo.derecha(c, QUICK, "01", 13, ancho - 54, 62, P["sakura"], tracking=3.0)
+    return lienzo.guardar(c, "assets", "portada.svg")
 
 
-# ══════════════════════════════════════════════════════════════ divisor ══
+# ══════════════════════════════════════════════════════════════ divisor ══# ══════════════════════════════════════════════════════════════ divisor ══
 def divisor():
     """1200×64. Una línea que se desvanece con una flor en el centro."""
     ancho, alto = 1200, 64
@@ -138,6 +149,7 @@ PROYECTOS = [
               "memoria SQLite y 213 comandos. Se instala con una línea.",
         etiquetas=[("v3.7.0", "sakura"), ("353 pruebas", "menta"), ("AGPL-3.0", "lila")],
         color=P["sakura_fuerte"],
+        miniatura="thumb-portada.jpg",
     ),
     dict(
         archivo="shin-md-go",
@@ -147,6 +159,7 @@ PROYECTOS = [
               "sin node_modules y sin forks que mantener.",
         etiquetas=[("Go", "lila"), ("1 binario", "menta"), ("beta", "ambar")],
         color=P["lila_fuerte"],
+        miniatura="thumb-escena.jpg",
     ),
     dict(
         archivo="kuroxi-platform",
@@ -156,6 +169,7 @@ PROYECTOS = [
               "para cuando la red no está.",
         etiquetas=[("JavaScript", "ambar"), ("durable", "menta")],
         color="#3E7CB1",
+        miniatura="thumb-gato.jpg",
     ),
     dict(
         archivo="lab2experimental",
@@ -165,6 +179,7 @@ PROYECTOS = [
               "auto-update e integraciones nuevas.",
         etiquetas=[("experimental", "ambar"), ("yt-dlp", "lila")],
         color=P["ambar"],
+        miniatura="thumb-mascota.jpg",
     ),
     dict(
         archivo="ginko-covers",
@@ -174,6 +189,7 @@ PROYECTOS = [
               "gratuita, para que el bot los cante.",
         etiquetas=[("Python", "menta"), ("RVC", "sakura")],
         color="#57B79B",
+        miniatura="thumb-prado.jpg",
     ),
 ]
 
@@ -186,6 +202,52 @@ FONDOS_ETIQUETA = {
 
 
 def tarjeta(datos):
+    """Tarjeta con miniatura arriba y ficha abajo (estilo tarjeta de personaje)."""
+    ancho, alto = 580, 342
+    color = datos["color"]
+    c = Lienzo(ancho, alto, datos["titulo"])
+    lienzo.marco(c, 1, 1, ancho - 2, alto - 2, radio=20, borde=P["borde"], grosor=2)
+
+    # La miniatura ocupa la mitad de arriba, con el marco redondeado.
+    miniatura = os.path.join(os.path.dirname(lienzo.AQUI), "assets", "anime", datos["miniatura"])
+    if os.path.exists(miniatura):
+        c.defs_agrega(
+            '<clipPath id="mini_%s"><rect x="11" y="11" width="%s" height="152" rx="14"/></clipPath>'
+            % (datos["archivo"], formato(ancho - 22))
+        )
+        c.agrega('<image href="%s" x="11" y="11" width="%s" height="152" '
+                 'preserveAspectRatio="xMidYMid slice" clip-path="url(#mini_%s)"/>'
+                 % (svgkit.uri_imagen(miniatura), formato(ancho - 22), datos["archivo"]))
+        # Velo inferior de la miniatura, para que el título respire
+        c.defs_agrega(
+            '<linearGradient id="velo_%s" x1="0" y1="0" x2="0" y2="1">'
+            '<stop offset="0.45" stop-color="#150A20" stop-opacity="0"/>'
+            '<stop offset="1" stop-color="#150A20" stop-opacity="0.72"/></linearGradient>'
+            % datos["archivo"]
+        )
+        c.agrega('<rect x="11" y="83" width="%s" height="80" fill="url(#velo_%s)"/>'
+                 % (formato(ancho - 22), datos["archivo"]))
+
+    # Ficha: icono, título y lema
+    c.circulo(48, 200, 21, color)
+    lienzo.sakura(c, 48, 200, 10, P["blanco"], color, giro=14, estambres=False)
+    lienzo.texto(c, BALOO, datos["titulo"], 24, 80, 208, P["tinta"])
+    if datos["lema"]:
+        ancho_titulo = BALOO.ancho(datos["titulo"], 24)
+        lienzo.texto(c, QUICK, datos["lema"], 12, 82 + ancho_titulo + 12, 207,
+                     P["tinta_tenue"], tracking=1.4)
+
+    lienzo.parrafo(c, NUNITO, datos["texto"], 14.5, 26, 258, P["tinta_suave"],
+                   ancho - 52, interlineado=20, limite=2)
+
+    x = 26
+    for txt, tipo in datos["etiquetas"]:
+        fondo, tinta = FONDOS_ETIQUETA[tipo]
+        x += lienzo.pastilla(c, QUICK, txt, x, 296, tam=12, fondo=fondo, color=tinta) + 8
+    return lienzo.guardar(c, "assets", "cards", datos["archivo"] + ".svg")
+
+
+def _tarjeta_vieja(datos):
     ancho, alto = 580, 188
     c = Lienzo(ancho, alto, datos["titulo"])
     color = datos["color"]
@@ -321,8 +383,8 @@ def lenguajes():
 def main(partes):
     cargar_fuentes()
     hechas = []
-    if not partes or "hero" in partes:
-        hechas.append(hero())
+    if not partes or "portada" in partes or "hero" in partes:
+        hechas.append(portada())
     if not partes or "divisor" in partes:
         hechas.append(divisor())
     if not partes or "pie" in partes:
