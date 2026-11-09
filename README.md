@@ -1,201 +1,188 @@
 <div align="center">
 
-<!-- BANNER PRINCIPAL ANIMADO CYBERPUNK / SHIN -->
-<img src="https://capsule-render.vercel.app/api?type=waving&height=280&color=gradient&customColorList=12,23,25,30&text=⚡%20RIOKUROXI%20⚡&fontSize=58&fontColor=ffffff&animation=twinkling&fontAlignY=38&desc=Cybersecurity%20%7C%20AI%20Agent%20Architect%20%7C%20Shin-Core%20Creator&descSize=18&descAlignY=60" width="100%"/>
+<img src="assets/hero.svg" width="100%" alt="Rioxuroxi — arquitecto de software, bots autónomos y memoria local"/>
 
-<!-- TYPING ANIMADO CON EFECTO NEÓN VERDE -->
-<a href="https://github.com/riokuroxi-svg">
-  <img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=24&duration=3000&pause=1000&color=00F260&center=true&vCenter=true&width=750&lines=🛡️+Cybersecurity+%26+Autonomous+AI+Architect;⚡+Creator+of+Shin-MD+%26+Shin-Core+Framework;🧠+Local-First+RAG+Memory+%26+Heuristic+Anti-Spam;🇲🇽+Building+Indestructible+Software+from+Mexico" alt="Typing SVG" />
-</a>
-
-<br/>
-
-<!-- BADGES FLOTANTES CON LOGOS -->
-<p align="center">
-  <a href="https://github.com/riokuroxi-svg">
-    <img src="https://img.shields.io/github/followers/riokuroxi-svg?label=Followers&style=for-the-badge&color=00F260&logo=github&logoColor=white"/>
-  </a>
-  <a href="https://github.com/riokuroxi-svg/Shin-MD">
-    <img src="https://img.shields.io/badge/Shin--MD-Production%20Bot-25D366?style=for-the-badge&logo=whatsapp&logoColor=white"/>
-  </a>
-  <a href="https://github.com/riokuroxi-svg/Shin-Lab">
-    <img src="https://img.shields.io/badge/Shin--Lab-Experimental%20Lab-FBBF24?style=for-the-badge&logo=probot&logoColor=black"/>
-  </a>
-  <a href="https://www.gnu.org/licenses/agpl-3.0.html">
-    <img src="https://img.shields.io/badge/License-AGPLv3%20Copyleft-red?style=for-the-badge&logo=gnu&logoColor=white"/>
-  </a>
+<p>
+  <a href="#-sobre-mí">Sobre mí</a> ·
+  <a href="#-proyectos">Proyectos</a> ·
+  <a href="#-lo-que-uso">Stack</a> ·
+  <a href="#-en-números">Números</a> ·
+  <a href="#-fuera-del-teclado">Fuera del teclado</a> ·
+  <a href="#-hablemos">Hablemos</a>
 </p>
 
-<!-- TROFEOS DE GITHUB EN TEMA OSCURO / MATRIX -->
-<p align="center">
-  <img src="https://github-profile-trophy.vercel.app/?username=riokuroxi-svg&theme=matrix&no-frame=true&no-bg=true&margin-w=4&row=1&column=7" alt="Trophies" width="100%"/>
-</p>
-
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%"/>
+<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=20&duration=3200&pause=900&color=E4668F&center=true&vCenter=true&width=780&lines=Bots+de+WhatsApp+que+no+se+caen;Memoria+local%2C+sin+mandar+nada+a+un+servidor;Anti-ban+nativo+y+pruebas+que+se+ejecutan+de+verdad;Y+un+poco+de+sakura+en+la+terminal" alt=""/>
 
 </div>
 
----
+<img src="assets/divisor.svg" width="100%" alt=""/>
 
-## 👨‍💻 `whoami` // Acerca de Mí
+## 🌸 Sobre mí
 
 <table>
   <tr>
-    <td width="65%" valign="top">
-      <p>
-        ¡Hola! 👋 Soy <b>riokuroxi-svg</b>, desarrollador y arquitecto de software de <b>México 🇲🇽</b> especializado en <b>Sistemas de Agentes Autónomos</b>, <b>Ciberseguridad Aplicada</b> y <b>Arquitecturas Locales (Local-First)</b>.
-      </p>
-      <p>
-        Me apasiona transformar los bots de mensajería tradicionales en sistemas autónomos blindados capaces de tomar decisiones heurísticas en tiempo real, recordar contexto a sub-milisegundo con SQLite RAG y resistir ataques adversariales (Prompt Injection, CVE-2025-67511, DoS).
-      </p>
-      <ul>
-        <li>🌱 <b>Enfocado en:</b> IA local, red-teaming (Alias Robotics CAI), mitigación anti-ban y motores distribuidos.</li>
-        <li>💡 <b>Filosofía:</b> <i>"Cero código trampa, cero DRM tóxico, 100% resiliencia y soberanía de datos."</i></li>
-        <li>🎯 <b>Objetivo actual:</b> Evolucionar <b>Shin-Core</b> hacia el estándar de framework de agentes más ligero y rápido del ecosistema.</li>
-      </ul>
-    </td>
-    <td width="35%" align="center" valign="middle">
-      <img src="https://media.giphy.com/media/qgQUggAC3Pfv687qPC/giphy.gif" width="100%" alt="Cyber Coding Animation" style="border-radius: 12px; border: 2px solid #00F260;" />
-    </td>
-  </tr>
-</table>
+    <td width="62%" valign="top">
 
----
+Soy **Roxi** `riokuroxi-svg`, desarrollador y arquitecto de software desde
+**México** 🇲🇽. Mi trabajo es convertir bots de mensajería en sistemas que
+**aguantan**: procesos que se separan en lugar de caerse juntos, memoria que vive
+en el disco del equipo y no en la nube de nadie, y decisiones heurísticas tomadas
+en el momento, sin pedir permiso a una API.
 
-## 🛠️ Stack Tecnológico & Armamento
+- ⚙️ **Lo que hago:** núcleos de bots, colas de envío, anti-ban, memoria local
+  con SQLite y un instalador que funciona igual en Termux, en un VPS y en Docker.
+- 🧠 **Cómo lo hago:** primero investigo —protocolo, incidencias, cómo lo resuelve
+  quien ya se estrelló— y después escribo. Cero código trampa, cero dependencias
+  que sobren.
+- 🧪 **Cómo lo compruebo:** con pruebas que se ejecutan solas. Si una frase del
+  README se puede medir, hay un archivo en `test/` que la mide.
+- 🇲🇽 **Dónde:** México, con café de olla y una playlist de openings de fondo.
 
-<div align="center">
+<p>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD">
+    <img src="https://img.shields.io/badge/Shin--MD-v3.7.0-E4668F?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Shin-MD"/>
+  </a>
+  <a href="https://github.com/riokuroxi-svg?tab=repositories">
+    <img src="https://img.shields.io/badge/licencia-AGPL--3.0--only-6E4FB0?style=for-the-badge&logo=gnu&logoColor=white" alt="AGPL-3.0-only"/>
+  </a>
+  <a href="https://ko-fi.com/kuroxisvg">
+    <img src="https://img.shields.io/badge/Ko--fi-invitarme_un_café-F2BE6B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi"/>
+  </a>
+</p>
 
-<!-- SKILL ICONS ANIMADOS -->
-<a href="https://skillicons.dev">
-  <img src="https://skillicons.dev/icons?i=nodejs,ts,go,sqlite,docker,linux,bash,git,githubactions,python,postgres,redis,vscode,postman,graphql,regex&perline=8" alt="Tech Stack Icons" />
-</a>
-
-<br/><br/>
-
-| Dominio | Tecnologías / Herramientas Clave |
-| :--- | :--- |
-| **Backend & Runtime** | `Node.js (ESM / Node 22+)` · `TypeScript Nativo` · `Go (Microservicios / whatsmeow)` · `Bash Scripts` |
-| **Bases de Datos & Memoria** | `SQLite Native (WAL Mode)` · `FTS5 Full-Text Search (RAG en 0.35ms)` · `PostgreSQL` · `Redis` |
-| **Agentes & Arquitectura** | `Shin-Core` · `Pub/Sub Event Bus` · `Sub-bot Process Isolation (IPC)` · `Agnostic IWhatsAppEngine` |
-| **Ciberseguridad & Red-Team** | `Alias Robotics CAI` · `Anti-Prompt Injection` · `RBAC / BOLA Guards` · `Secret DLP Sanitizer` |
-| **DevOps & Entorno** | `Docker` · `Linux / Debian` · `Termux (Local-First Android)` · `GitHub Actions CI/CD` |
-
-</div>
-
----
-
-## 🚀 Proyectos Destacados (Flagship Projects)
-
-<table align="center" width="100%">
-  <tr>
-    <td width="50%" valign="top">
-      <div align="center">
-        <img src="https://media.giphy.com/media/L1R1tvI9svkIWwpVYr/giphy.gif" width="100%" height="160px" style="object-fit: cover; border-radius: 8px;" alt="Shin-MD GIF"/>
-        <h3>🤖 <a href="https://github.com/riokuroxi-svg/Shin-MD">Shin-MD (Estable)</a></h3>
-        <p>
-          <img src="https://img.shields.io/badge/Version-v3.0.3-25D366?style=flat-square"/>
-          <img src="https://img.shields.io/badge/Coverage-100%25-brightgreen?style=flat-square"/>
-          <img src="https://img.shields.io/badge/Zero--Regression-Verified-00F260?style=flat-square"/>
-        </p>
-      </div>
-      <p>
-        Bot de mensajería para WhatsApp con arquitectura multicapa desacoplada y diseño anti-bloqueo:
-      </p>
-      <ul>
-        <li>🛡️ <b>Anti-Ban Throttler:</b> Jitter gaussiano y políticas de aclimatación de números nuevos.</li>
-        <li>⚡ <b>Cola Serial en Memoria:</b> Despacho ordenado con prioridades y reintentos atómicos.</li>
-        <li>💾 <b>SQLite WAL Nativo:</b> Persistencia a prueba de micro-cortes y reinicios forzados.</li>
-        <li>📊 <b>Health Monitor:</b> Panel web interactivo con endpoint de telemetría <code>/metrics</code>.</li>
-      </ul>
-    </td>
-    <td width="50%" valign="top">
-      <div align="center">
-        <img src="https://media.giphy.com/media/3oKIPnAiaMCws8nOsE/giphy.gif" width="100%" height="160px" style="object-fit: cover; border-radius: 8px;" alt="Shin-Lab GIF"/>
-        <h3>🧪 <a href="https://github.com/riokuroxi-svg/Shin-Lab">Shin-Lab (Laboratorio AI)</a></h3>
-        <p>
-          <img src="https://img.shields.io/badge/Tests-80%2F80%20Verdes-FBBF24?style=flat-square"/>
-          <img src="https://img.shields.io/badge/Red--Team-CAI%20Hardened-60A5FA?style=flat-square"/>
-          <img src="https://img.shields.io/badge/AGPLv3-Section%207-red?style=flat-square"/>
-        </p>
-      </div>
-      <p>
-        Laboratorio de I+D y banco de pruebas para el framework de agentes <b>Shin-Core</b>:
-      </p>
-      <ul>
-        <li>🧠 <b>Shin Brain:</b> Clasificador anti-spam heurístico sin dependencias externas (ALLOW / SLOW / BLOCK).</li>
-        <li>🗃️ <b>Memoria RAG SQLite:</b> Búsqueda semántica FTS5 con recall en <b>0.35ms</b> para 10,000 memorias.</li>
-        <li>🤖 <b>Sub-Bots Aislados:</b> Procesos hijos aislados con ACLs y límite de riesgo por capacidades.</li>
-        <li>🔌 <b>IWhatsAppEngine:</b> Abstracción agnóstica de transporte (Baileys / Whatsmeow Go / Mock).</li>
-      </ul>
+  </td>
+    <td width="38%" align="center" valign="middle">
+      <img src="assets/anime/roxi.jpg" width="100%" alt="Retrato: sakura de noche" style="border-radius:18px"/>
     </td>
   </tr>
 </table>
 
----
+<img src="assets/divisor.svg" width="100%" alt=""/>
 
-## 📊 Estadísticas & Actividad de GitHub
+## 🚀 Proyectos
 
-<div align="center">
+Todo cuelga de la misma idea: **un núcleo pequeño y honesto**, y encima de él las
+cosas que hacen falta.
 
-<table align="center">
-  <tr>
-    <td align="center">
-      <img src="https://github-readme-stats.vercel.app/api?username=riokuroxi-svg&show_icons=true&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00F260&icon_color=00F260&text_color=c9d1d9" alt="GitHub Stats" width="410"/>
-    </td>
-    <td align="center">
-      <img src="https://github-readme-stats.vercel.app/api/top-langs/?username=riokuroxi-svg&layout=compact&theme=tokyonight&hide_border=true&bg_color=0D1117&title_color=00F260&text_color=c9d1d9" alt="Top Languages" width="370"/>
-    </td>
-  </tr>
-</table>
+<p align="center">
+  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/cards/shin-md.svg" width="49%" alt="Shin-MD — bot de WhatsApp multi-device, v3.7.0, 353 pruebas"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD-Go"><img src="assets/cards/shin-md-go.svg" width="49%" alt="Shin-MD-Go — el mismo núcleo en Go sobre whatsmeow"/></a>
+  <a href="https://github.com/riokuroxi-svg/kuroxi-platform"><img src="assets/cards/kuroxi-platform.svg" width="49%" alt="kuroxi-platform — mensajería offline con entrega garantizada"/></a>
+  <a href="https://github.com/riokuroxi-svg/Lab2experimental"><img src="assets/cards/lab2experimental.svg" width="49%" alt="Lab2 experimental — motor de descargas local"/></a>
+  <a href="https://github.com/riokuroxi-svg/Ginko-Covers"><img src="assets/cards/ginko-covers.svg" width="49%" alt="Ginko-Covers — covers con voz de anime"/></a>
+</p>
 
-<br/>
+**Pruébalo:** Shin-MD se instala con una línea, verifica la huella del instalador
+y arranca el bot al terminar. Nada de descargar y ejecutar a ciegas:
 
-<!-- STREAK STATS -->
-<img src="https://github-readme-streak-stats.herokuapp.com/?user=riokuroxi-svg&theme=tokyonight&hide_border=true&background=0D1117&ring=00F260&fire=00F260&currStreakLabel=00F260" alt="GitHub Streak" width="790"/>
-
-<br/><br/>
-
-<!-- ACTIVITY GRAPH ANIMADO -->
-<img src="https://github-readme-activity-graph.vercel.app/graph?username=riokuroxi-svg&bg_color=0D1117&color=00F260&line=00F260&point=FFFFFF&area=true&hide_border=true" alt="Activity Graph" width="790"/>
-
-</div>
-
----
-
-## 🕹️ Snake Game // Historial de Contribuciones
-
-<div align="center">
-  <img src="https://raw.githubusercontent.com/platane/snk/output/github-contribution-grid-snake-dark.svg" alt="Snake animation" width="100%"/>
-</div>
-
----
-
-## ⚡ Terminal Status // Live Feed
-
-```zsh
-riokuroxi@shin-core:~$ neofetch --profile
-  /\_/\       OS: Linux Debian 12 / Termux Local-First
- ( o.o )      Host: Shin-Core Distributed Node
-  > ^ <       Kernel: 6.6.x-zen-hardened
-              Uptime: 99.98% (Anti-Crash Watchdog Active)
-              Shell: zsh / bash
-              Primary Engine: Baileys + Whatsmeow Go Hybrid
-              RAG Latency: 0.35ms (SQLite FTS5 Native)
-              Security Level: CAI Red-Teamed (0 Vulnerabilities)
+```bash
+curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.sh | sh
 ```
 
----
+<img src="assets/anime/escena.jpg" width="100%" alt="Ilustración: una noche de deploy en la azotea" style="border-radius:18px"/>
+
+<img src="assets/divisor.svg" width="100%" alt=""/>
+
+## 🧰 Lo que uso
 
 <div align="center">
 
-<img src="https://user-images.githubusercontent.com/73097560/115834477-dbab4500-a447-11eb-908a-139a6edaec5c.gif" width="100%"/>
+<img src="https://skillicons.dev/icons?i=js,ts,nodejs,go,python,sqlite,bash,docker,linux,git,githubactions,vscode&perline=12" alt="Stack"/>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=700&size=20&duration=3000&pause=800&color=00F260&center=true&vCenter=true&width=650&lines=¿Tienes+preguntas+o+quieres+colaborar%3F;Explora+los+repositorios+y+abre+un+Issue+o+PR+🚀" alt="Typing SVG"/>
+<br/><br/>
+
+<img src="https://raw.githubusercontent.com/riokuroxi-svg/riokuroxi-svg/main/assets/lenguajes.svg" width="100%" alt="JavaScript 77 %, Go 17 %, Shell 3 %, Python 2 %"/>
+
+</div>
+
+| Terreno | Con qué lo trabajo |
+| :--- | :--- |
+| **Núcleo de bots** | `Node.js 22` (ESM, sin transpilar) · `Baileys` con parches propios · `whatsmeow` en Go |
+| **Memoria y datos** | `SQLite` en modo WAL · `FTS5` para búsqueda · respaldos que no se llevan los datos por delante |
+| **Inmunidad** | anti-ban con jitter, colas con prioridad, límites por capacidad, aislamiento de sub-procesos |
+| **Herramientas** | `Bash` POSIX puro para los instaladores · `systemd` para el servicio · `Docker` |
+| **Calidad** | runner de pruebas propio · `tsc` sobre JSDoc · cero errores de lint o no entra |
+
+<img src="assets/anime/tira.jpg" width="100%" alt="Ilustración: la mesa de trabajo de noche" style="border-radius:18px"/>
+
+<img src="assets/divisor.svg" width="100%" alt=""/>
+
+## 📊 En números
+
+<div align="center">
+
+|  |  |  |
+| :---: | :---: | :---: |
+| **213**<br/>comandos en Shin-MD | **353**<br/>pruebas en verde | **520**<br/>commits propios |
+| **13**<br/>repositorios | **2**<br/>lenguajes de verdad | **1**<br/>línea para instalar |
 
 <br/>
 
-<!-- FOOTER ANIMADO -->
-<img src="https://capsule-render.vercel.app/api?type=waving&height=140&color=gradient&customColorList=12,23,25,30&section=footer" width="100%"/>
+<a href="https://github.com/riokuroxi-svg/Shin-MD">
+  <img src="https://github-readme-stats.vercel.app/api/pin/?username=riokuroxi-svg&repo=Shin-MD&theme=rose_pine&hide_border=true&bg_color=FFFAF6&title_color=E4668F&icon_color=9B7BD4&text_color=5F5478" alt="Shin-MD"/>
+</a>
 
 </div>
+
+<img src="assets/divisor.svg" width="100%" alt=""/>
+
+## 🐈 Fuera del teclado
+
+<table>
+  <tr>
+    <td width="42%" align="center" valign="middle">
+      <img src="assets/anime/gato.jpg" width="100%" alt="Ilustración: un gato negro sobre el escritorio" style="border-radius:18px"/>
+    </td>
+    <td width="58%" valign="top">
+
+- 🎧 **Sonando:** openings de los 2000 y lo-fi para las horas raras.
+- 🌙 **Se programa de noche.** La mejor hora para cazar un `EEXIST` es cuando ya
+  no hay nadie mirando.
+- 🍵 **Café de olla**, no espresso. Y sí, hay una taza en cada ilustración.
+- 🐈⬛ **Supervisor de calidad:** un gato negro que aprueba las releases caminando
+  sobre el teclado.
+- 📝 **Si algo no está escrito, no existe.** Por eso cada proyecto trae su guía
+  de instalación y su informe de lo que se rompió por el camino.
+
+  </td>
+  </tr>
+</table>
+
+<img src="assets/divisor.svg" width="100%" alt=""/>
+
+```zsh
+roxi@shin-md:~$ neofetch --perfil
+        /\_/\        Sistema .... Debian y Termux
+       ( o.o )       Núcleo ..... Shin-MD v3.7.0
+        > ^ <        Memoria .... SQLite WAL · FTS5
+                     Anti-ban ... jitter + aclimatación
+                     Pruebas .... 353 en verde
+                     Licencia ... AGPL-3.0-only
+                     Sakura ..... siempre
+```
+
+<img src="assets/divisor.svg" width="100%" alt=""/>
+
+## 📬 Hablemos
+
+<div align="center">
+
+¿Un bot que se cae cada semana? ¿Una migración que da miedo?
+
+<p>
+  <a href="https://github.com/riokuroxi-svg?tab=repositories"><img src="https://img.shields.io/badge/Repositorios-riokuroxi--svg-2A2340?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
+  <a href="https://ko-fi.com/kuroxisvg"><img src="https://img.shields.io/badge/Ko--fi-kuroxisvg-F2BE6B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD/issues"><img src="https://img.shields.io/badge/Issues-abrir_uno-E4668F?style=for-the-badge&logo=githubissues&logoColor=white" alt="Issues"/></a>
+</p>
+
+</div>
+
+<img src="assets/pie.svg" width="100%" alt="Transformando lógica en estética, un commit a la vez"/>
+
+<!--
+  Las piezas de assets/ (hero, divisor, pie y tarjetas) se dibujan solas:
+      python3 tools/build_assets.py
+  El texto va convertido a trazado vectorial, así que se ven igual en cualquier
+  navegador o móvil, sin depender de fuentes instaladas.
+  Las ilustraciones de assets/anime/ son originales de este repositorio.
+-->
