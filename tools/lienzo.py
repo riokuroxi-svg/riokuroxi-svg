@@ -65,6 +65,11 @@ def fuente(nombre: str, peso: int | None = None) -> svgkit.Fuente:
     return _cache[clave]
 
 
+def mono():
+    """Monoespaciada para los comandos (DejaVu Sans Mono)."""
+    return fuente("DejaVuSansMono.ttf")
+
+
 def cjk(peso="Bold"):
     """La fuente del kanji 反魂. Es un archivo del sistema, así que si no está
     se devuelve None y las piezas simplemente no lo dibujan: nunca rompen."""
