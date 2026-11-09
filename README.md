@@ -52,7 +52,7 @@ en el momento, sin pedir permiso a una API.
 
   </td>
     <td width="38%" align="center" valign="middle">
-      <img src="assets/anime/roxi.jpg" width="100%" alt="Retrato: sakura de noche" style="border-radius:18px"/>
+      <img src="assets/anime/prado.jpg" width="100%" alt="Ilustración: un prado de margaritas al amanecer" style="border-radius:18px"/>
     </td>
   </tr>
 </table>
@@ -119,7 +119,7 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 <br/>
 
 <a href="https://github.com/riokuroxi-svg/Shin-MD">
-  <img src="https://github-readme-stats.vercel.app/api/pin/?username=riokuroxi-svg&repo=Shin-MD&theme=rose_pine&hide_border=true&bg_color=FFFAF6&title_color=E4668F&icon_color=9B7BD4&text_color=5F5478" alt="Shin-MD"/>
+  <img src="assets/destacado.svg" width="100%" alt="Shin-MD — v3.7.0, 353 pruebas, AGPL-3.0-only, y el comando de instalación"/>
 </a>
 
 </div>
@@ -139,7 +139,7 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 - 🌙 **Se programa de noche.** La mejor hora para cazar un `EEXIST` es cuando ya
   no hay nadie mirando.
 - 🍵 **Café de olla**, no espresso. Y sí, hay una taza en cada ilustración.
-- 🐈⬛ **Supervisor de calidad:** un gato negro que aprueba las releases caminando
+- 🐈‍⬛ **Supervisor de calidad:** un gato negro que aprueba las releases caminando
   sobre el teclado.
 - 📝 **Si algo no está escrito, no existe.** Por eso cada proyecto trae su guía
   de instalación y su informe de lo que se rompió por el camino.
