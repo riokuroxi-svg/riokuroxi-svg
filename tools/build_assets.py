@@ -29,14 +29,16 @@ from lienzo import P, Lienzo, formato
 BALOO = None
 QUICK = None
 NUNITO = None
+MONO = None
 CJK = None
 
 
 def cargar_fuentes():
-    global BALOO, QUICK, NUNITO, CJK
+    global BALOO, QUICK, NUNITO, MONO, CJK
     BALOO = lienzo.fuente("Baloo2.ttf", peso=700)
     QUICK = lienzo.fuente("Quicksand.ttf", peso=600)
     NUNITO = lienzo.fuente("Nunito.ttf", peso=400)
+    MONO = lienzo.mono()
     CJK = lienzo.cjk()
 
 
@@ -56,6 +58,14 @@ def hero():
     lienzo.sakura(c, 1160, 210, 34, P["lila"], P["blanco"], giro=40, opacidad=0.75)
     lienzo.sakura(c, 980, 250, 26, P["sakura_fuerte"], P["blanco"], giro=70, opacidad=0.5)
     lienzo.lluvia(c, ancho, alto, cuantas=14, semilla=41, radio=(4, 9))
+
+    # Tres pétalos que se mecen: es lo único que se mueve, y basta para que la
+    # cabecera se sienta viva sin distraer del nombre.
+    lienzo.petalo_que_cae(c, 862, 52, 11, P["sakura"], 20, duracion=12.0, retraso=0.4)
+    lienzo.petalo_que_cae(c, 792, 148, 8, P["lila"], 40, duracion=15.0, deriva=30,
+                          caida=42, retraso=1.6, opacidad=0.85)
+    lienzo.petalo_que_cae(c, 918, 262, 9, P["sakura_fuerte"], 70, duracion=13.0,
+                          deriva=-22, caida=30, retraso=3.0, opacidad=0.8)
 
     # Antetítulo
     lienzo.texto(c, QUICK, "PERFIL  ·  GITHUB", 15, 70, 84, P["lila_fuerte"], tracking=3.4)
@@ -213,6 +223,60 @@ def tarjeta(datos):
     return lienzo.guardar(c, "assets", "cards", datos["archivo"] + ".svg")
 
 
+# ══════════════════════════════════════════════ el repositorio destacado ══
+def destacado():
+    """1200×236. Shin-MD, con el comando de instalación a la vista.
+
+    Existe porque la tarjeta automática de estadísticas de GitHub depende de un
+    servicio de terceros que se cae (y cuando se cae deja un hueco roto en el
+    perfil). Esto se dibuja aquí y no depende de nadie.
+    """
+    ancho, alto = 1200, 236
+    c = Lienzo(ancho, alto, "Shin-MD, repositorio destacado")
+
+    lienzo.degradado(c, "dest", [P["sakura_palido"], P["lila_palido"]], x1=0, y1=0, x2=1, y2=1)
+    c.rect(0, 0, ancho, alto, 22, "url(#dest)")
+    lienzo.lluvia(c, ancho, 110, cuantas=10, semilla=17, radio=(4, 10), opacidad=(0.25, 0.55))
+
+    # Flor tenue abajo a la derecha: no toca ni el título ni la terminal.
+    lienzo.sakura(c, 1178, 226, 36, P["blanco"], P["sakura"], giro=14, opacidad=0.35,
+                  estambres=False)
+
+    lienzo.texto(c, QUICK, "DESTACADO", 13, 56, 52, P["lila_fuerte"], tracking=3.6)
+    lienzo.texto(c, BALOO, "Shin-MD", 52, 52, 112, P["tinta"])
+    if CJK is not None:
+        lienzo.texto(c, CJK, "反魂", 30, 56 + BALOO.ancho("Shin-MD", 52) + 16, 108,
+                     P["sakura_fuerte"], opacidad=0.9)
+
+    x = 56
+    for txt, fondo, color in [
+        ("v3.7.0", P["sakura"], P["blanco"]),
+        ("353 pruebas", P["blanco"], P["lila_fuerte"]),
+        ("AGPL-3.0-only", P["blanco"], "#2F8A72"),
+    ]:
+        x += lienzo.pastilla(c, QUICK, txt, x, 146, tam=14, fondo=fondo, color=color) + 10
+
+    lienzo.texto(c, NUNITO, "Bot de WhatsApp multi-device con núcleo propio y anti-ban nativo.",
+                 15, 56, 212, P["tinta_suave"])
+
+    # La caja del comando, como una terminal pequeña
+    caja_x, caja_y, caja_w, caja_h = 552, 44, 592, 148
+    c.rect(caja_x + 2, caja_y + 6, caja_w, caja_h, 14, "#D9C8E8", opacidad=0.6)
+    c.rect(caja_x, caja_y, caja_w, caja_h, 14, P["tinta"])
+    for i, color in enumerate([P["sakura_fuerte"], P["ambar"], P["menta"]]):
+        c.circulo(caja_x + 22 + i * 18, caja_y + 22, 5.5, color)
+    lienzo.texto(c, MONO, "roxi@shin-md", 13, caja_x + 22, caja_y + 60, P["tinta_tenue"])
+
+    linea1 = "curl -fsSL https://raw.githubusercontent.com/"
+    linea2 = "riokuroxi-svg/Shin-MD/v3.7.0/shin.sh | sh"
+    lienzo.texto(c, MONO, "$", 14, caja_x + 22, caja_y + 92, P["menta"])
+    lienzo.texto(c, MONO, linea1, 14, caja_x + 40, caja_y + 92, "#E9E4F5")
+    lienzo.texto(c, MONO, linea2, 14, caja_x + 22, caja_y + 116, P["sakura"])
+    lienzo.texto(c, MONO, "· descarga, comprueba la huella y arranca", 12.5,
+                 caja_x + 22, caja_y + 140, P["tinta_tenue"])
+    return lienzo.guardar(c, "assets", "destacado.svg")
+
+
 # ═══════════════════════════════════════════════ lenguajes (barras) ══
 # Los porcentajes salen de sumar los bytes de cada lenguaje en los repositorios
 # públicos. Si cambian, se cambian aquí y se vuelve a ejecutar el script.
@@ -263,6 +327,8 @@ def main(partes):
         hechas.append(divisor())
     if not partes or "pie" in partes:
         hechas.append(pie())
+    if not partes or "destacado" in partes:
+        hechas.append(destacado())
     if not partes or "lenguajes" in partes:
         hechas.append(lenguajes())
     if not partes or "cards" in partes or "tarjetas" in partes:
