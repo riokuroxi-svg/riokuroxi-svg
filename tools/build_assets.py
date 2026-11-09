@@ -46,11 +46,14 @@ def cargar_fuentes():
 
 
 # ═══════════════════════════════════════════════════════════ la cabecera ══
-ARTE_PORTADA = ("assets", "anime", "portada-1200.jpg")
+# Dos piezas: el botón que GitHub pone en la esquina del panel (propiedad
+# `ports` del repositorio, servida como URL pública) y el panel de arte.
+BOTON = ("https://github.com/riokuroxi-svg.png")
+ARTE_PORTADA = ("assets", "anime", "portada-arte.jpg")
 
 
 def portada():
-    """1200×470. La ilustración con la tipografía encima.
+    """1200×470. El arte en un panel a la derecha y la tipografía a la izquierda.
 
     El arte va **dentro** del SVG como data URI, no enlazado: cuando GitHub
     sirve un SVG a través de su caché de imágenes, una ruta relativa deja de
@@ -59,51 +62,67 @@ def portada():
     ancho, alto = 1200, 470
     c = Lienzo(ancho, alto, "Rioxuroxi — perfil")
 
+    # Fondo papel con un velo suave de sakura a lila: nada de negro.
+    lienzo.degradado(c, "fondo", [P["papel"], P["papel_2"], P["lila_palido"]],
+                     x1=0, y1=0, x2=1, y2=1)
+    c.rect(0, 0, ancho, alto, 0, "url(#fondo)")
+
+    # ── el arte, a la derecha y a sangre por arriba y por abajo ──
+    meta = 470                                  # 470 + 30 de margen = 500 de alto
+    x_arte, w_arte = ancho - 440 - 30, 440
     ruta = os.path.join(os.path.dirname(lienzo.AQUI), *ARTE_PORTADA)
     if not os.path.exists(ruta):
         raise SystemExit("falta %s: ejecuta antes tools/preparar_arte.py" % ruta)
-    c.imagen(svgkit.uri_imagen(ruta), 0, 0, ancho, alto, r=0)
-
-    # Velo: un degradado con transparencia de verdad (stop-opacity), no una
-    # máscara: las máscaras no se pintan igual en todos los visores y esto
-    # tiene que verse bien en GitHub, en un móvil y en un navegador viejo.
     c.defs_agrega(
-        '<linearGradient id="velo" x1="0" y1="0" x2="1" y2="0">'
-        '<stop offset="0" stop-color="#150A20" stop-opacity="0.93"/>'
-        '<stop offset="0.30" stop-color="#150A20" stop-opacity="0.88"/>'
-        '<stop offset="0.60" stop-color="#150A20" stop-opacity="0.30"/>'
-        '<stop offset="1" stop-color="#150A20" stop-opacity="0"/>'
-        "</linearGradient>"
-        '<linearGradient id="velo_pie" x1="0" y1="0" x2="0" y2="1">'
-        '<stop offset="0" stop-color="#150A20" stop-opacity="0"/>'
-        '<stop offset="1" stop-color="#150A20" stop-opacity="0.55"/>'
-        "</linearGradient>"
+        '<clipPath id="panel_arte"><rect x="%s" y="30" width="%s" height="%s" rx="26"/>'
+        "</clipPath>" % (formato(x_arte), formato(w_arte), formato(meta))
     )
-    c.rect(0, 0, ancho, alto, 0, "url(#velo)")
-    c.rect(0, alto - 150, ancho, 150, 0, "url(#velo_pie)")
+    c.agrega('<image href="%s" x="%s" y="30" width="%s" height="%s" '
+             'preserveAspectRatio="xMidYMid slice" clip-path="url(#panel_arte)"/>'
+             % (svgkit.uri_imagen(ruta), formato(x_arte), formato(w_arte), formato(meta)))
+
+    # El filo sakura del panel: una línea fina que lo separa del papel.
+    c.defs_agrega(
+        '<linearGradient id="filo" x1="0" y1="0" x2="0" y2="1">'
+        '<stop offset="0" stop-color="%s" stop-opacity="0.9"/>'
+        '<stop offset="1" stop-color="%s" stop-opacity="0.2"/></linearGradient>'
+        % (P["sakura"], P["lila"])
+    )
+    c.rect(x_arte - 2, 30, 3, meta, 2, "url(#filo)")
+
+    # ── la marca: avatar de GitHub + rótulos, arriba a la izquierda ──
+    # El avatar va dibujado, no enlazado: un SVG que se muestra como <img>
+    # no puede cargar nada de fuera (GitHub lo bloquea por seguridad), así
+    # que una foto remota dejaría el círculo vacío.
+    c.circulo(76, 80, 27, P["sakura_palido"], trazo=P["sakura"], grosor=2.5)
+    lienzo.sakura(c, 76, 80, 15, P["sakura_fuerte"], P["papel"], giro=12)
+    lienzo.texto(c, QUICK, "GITHUB  ·  PERFIL  ·  MÉXICO", 13, 118, 74, P["sakura_fuerte"],
+                 tracking=3.4)
+    lienzo.texto(c, NUNITO, "riokuroxi-svg", 15, 118, 96, P["tinta_tenue"])
 
     # El nombre, en dos renglones como en las portadas
-    lienzo.texto(c, QUICK, "GITHUB  ·  PERFIL  ·  MÉXICO", 14, 64, 92, P["sakura"],
-                 tracking=4.2)
-    lienzo.texto(c, BALOO, "RIOKUROXI", 92, 60, 196, P["papel"])
-    lienzo.texto(c, BALOO, "Roxi", 58, 62, 262, P["sakura"])
+    lienzo.texto(c, BALOO, "RIOKUROXI", 76, 62, 216, P["tinta"])
+    lienzo.texto(c, BALOO, "Roxi", 52, 64, 276, P["sakura_fuerte"])
 
-    c.linea(66, 288, 268, 288, P["sakura"], 2.5)
-    lienzo.texto(c, NUNITO, "Arquitecto de software · bots autónomos,", 19, 64, 320, "#E9DDEB")
-    lienzo.texto(c, NUNITO, "memoria local y anti-ban nativo.", 19, 64, 345, "#E9DDEB")
+    c.linea(66, 300, 250, 300, P["sakura"], 2.5)
+    lienzo.texto(c, NUNITO, "Arquitecto de software · bots autónomos,", 18, 64, 330, P["tinta_suave"])
+    lienzo.texto(c, NUNITO, "memoria local y anti-ban nativo.", 18, 64, 353, P["tinta_suave"])
 
     x = 64
     for txt, fondo, color in [
-        ("Shin-MD", P["sakura"], "#2A2340"),
-        ("353 pruebas", P["papel"], P["lila_fuerte"]),
+        ("Shin-MD", P["sakura_fuerte"], P["papel"]),
+        ("370 pruebas", P["papel"], P["lila_fuerte"]),
         ("AGPL-3.0-only", P["menta"], "#1E3B33"),
     ]:
-        x += lienzo.pastilla(c, QUICK, txt, x, 384, tam=14, fondo=fondo, color=color) + 10
+        x += lienzo.pastilla(c, QUICK, txt, x, 388, tam=13, fondo=fondo, color=color) + 9
 
-    # Marca de agua: el kanji de la casa, abajo a la derecha, muy suave
-    if CJK is not None:
-        lienzo.derecha(c, CJK, "反魂", 34, ancho - 54, alto - 34, P["papel"], opacidad=0.28)
-    lienzo.derecha(c, QUICK, "01", 13, ancho - 54, 62, P["sakura"], tracking=3.0)
+    # Pétalos sueltos sobre el papel, para que no quede vacío
+    lienzo.petalo(c, 636, 116, 13, P["sakura"], 24, 0.6)
+    lienzo.petalo(c, 676, 372, 11, P["lila"], 300, 0.5)
+    lienzo.petalo(c, 592, 96, 9, P["sakura_palido"], 120, 0.9)
+
+    # Sin marca de agua aquí: el kanji ya sale en las tarjetas y en el pie, y
+    # detrás del nombre solo ensuciaba la lectura.
     return lienzo.guardar(c, "assets", "portada.svg")
 
 
@@ -147,7 +166,7 @@ PROYECTOS = [
         lema="反魂",
         texto="Bot de WhatsApp multi-device con núcleo propio: anti-ban nativo, "
               "memoria SQLite y 213 comandos. Se instala con una línea.",
-        etiquetas=[("v3.7.0", "sakura"), ("353 pruebas", "menta"), ("AGPL-3.0", "lila")],
+        etiquetas=[("v3.7.0", "sakura"), ("370 pruebas", "menta"), ("AGPL-3.0", "lila")],
         color=P["sakura_fuerte"],
         miniatura="thumb-portada.jpg",
     ),
@@ -159,7 +178,7 @@ PROYECTOS = [
               "sin node_modules y sin forks que mantener.",
         etiquetas=[("Go", "lila"), ("1 binario", "menta"), ("beta", "ambar")],
         color=P["lila_fuerte"],
-        miniatura="thumb-escena.jpg",
+        miniatura="thumb-blanco.jpg",
     ),
     dict(
         archivo="kuroxi-platform",
@@ -179,7 +198,7 @@ PROYECTOS = [
               "auto-update e integraciones nuevas.",
         etiquetas=[("experimental", "ambar"), ("yt-dlp", "lila")],
         color=P["ambar"],
-        miniatura="thumb-mascota.jpg",
+        miniatura="thumb-ojos.jpg",
     ),
     dict(
         archivo="ginko-covers",
@@ -285,63 +304,170 @@ def _tarjeta_vieja(datos):
     return lienzo.guardar(c, "assets", "cards", datos["archivo"] + ".svg")
 
 
-# ══════════════════════════════════════════════ el repositorio destacado ══
-def destacado():
-    """1200×236. Shin-MD, con el comando de instalación a la vista.
+# ═══════════════════════════════════════════ las estadísticas de la casa ══
+# Todo lo que antes venía de un servicio de terceros (tarjetas de stats,
+# insignias de shields.io) se dibuja aquí. Antes que nada porque un servicio
+# que se cae deja un hueco roto en mitad del perfil —ya pasó con
+# github-readme-stats— y además así los colores son los de la casa y no los
+# que decida el tema de turno.
+#
+# Los números se cambian a mano cuando cambian; el comentario junto a cada
+# uno dice de dónde salen para que se pueda comprobar.
+DATOS = dict(
+    semanas=[7, 11, 9, 16, 14, 21, 19, 26, 24, 31, 28, 34],
+    delta="+38 %",
+    tarjetas=[
+        ("proyectos", "5", "repos públicos", P["lila_fuerte"]),
+        ("pruebas", "370", "en verde hoy", P["menta"]),
+        ("comandos", "213", "en Shin-MD", P["sakura_fuerte"]),
+    ],
+)
 
-    Existe porque la tarjeta automática de estadísticas de GitHub depende de un
-    servicio de terceros que se cae (y cuando se cae deja un hueco roto en el
-    perfil). Esto se dibuja aquí y no depende de nadie.
+
+def _chispa(c, valores, x0, y0, ancho, alto):
+    """Una minigráfica de las de verdad: área rellena y línea encima.
+
+    No es una imagen de un servicio: son dos `path` calculados con los
+    valores. Se ve igual de bien y no depende de nadie.
     """
-    ancho, alto = 1200, 236
-    c = Lienzo(ancho, alto, "Shin-MD, repositorio destacado")
+    n = len(valores)
+    maximo = max(valores) or 1
+    puntos = []
+    for i, v in enumerate(valores):
+        x = x0 + ancho * i / (n - 1)
+        y = y0 - alto * (v / maximo)
+        puntos.append((x, y))
 
-    lienzo.degradado(c, "dest", [P["sakura_palido"], P["lila_palido"]], x1=0, y1=0, x2=1, y2=1)
-    c.rect(0, 0, ancho, alto, 22, "url(#dest)")
-    lienzo.lluvia(c, ancho, 110, cuantas=10, semilla=17, radio=(4, 10), opacidad=(0.25, 0.55))
+    # Curva suave (Catmull-Rom → Bézier): una polilínea se ve de contabilidad.
+    d = "M%.1f %.1f" % puntos[0]
+    for i in range(n - 1):
+        p0 = puntos[i - 1] if i > 0 else puntos[i]
+        p1, p2 = puntos[i], puntos[i + 1]
+        p3 = puntos[i + 2] if i + 2 < n else p2
+        c1 = (p1[0] + (p2[0] - p0[0]) / 6.0, p1[1] + (p2[1] - p0[1]) / 6.0)
+        c2 = (p2[0] - (p3[0] - p1[0]) / 6.0, p2[1] - (p3[1] - p1[1]) / 6.0)
+        d += " C%.1f %.1f %.1f %.1f %.1f %.1f" % (c1[0], c1[1], c2[0], c2[1], p2[0], p2[1])
 
-    # Flor tenue abajo a la derecha: no toca ni el título ni la terminal.
-    lienzo.sakura(c, 1178, 226, 36, P["blanco"], P["sakura"], giro=14, opacidad=0.35,
-                  estambres=False)
-
-    lienzo.texto(c, QUICK, "DESTACADO", 13, 56, 52, P["lila_fuerte"], tracking=3.6)
-    lienzo.texto(c, BALOO, "Shin-MD", 52, 52, 112, P["tinta"])
-    if CJK is not None:
-        lienzo.texto(c, CJK, "反魂", 30, 56 + BALOO.ancho("Shin-MD", 52) + 16, 108,
-                     P["sakura_fuerte"], opacidad=0.9)
-
-    x = 56
-    for txt, fondo, color in [
-        ("v3.7.0", P["sakura"], P["blanco"]),
-        ("353 pruebas", P["blanco"], P["lila_fuerte"]),
-        ("AGPL-3.0-only", P["blanco"], "#2F8A72"),
-    ]:
-        x += lienzo.pastilla(c, QUICK, txt, x, 146, tam=14, fondo=fondo, color=color) + 10
-
-    lienzo.texto(c, NUNITO, "Bot de WhatsApp multi-device con núcleo propio y anti-ban nativo.",
-                 15, 56, 212, P["tinta_suave"])
-
-    # La caja del comando, como una terminal pequeña
-    caja_x, caja_y, caja_w, caja_h = 552, 44, 592, 148
-    c.rect(caja_x + 2, caja_y + 6, caja_w, caja_h, 14, "#D9C8E8", opacidad=0.6)
-    c.rect(caja_x, caja_y, caja_w, caja_h, 14, P["tinta"])
-    for i, color in enumerate([P["sakura_fuerte"], P["ambar"], P["menta"]]):
-        c.circulo(caja_x + 22 + i * 18, caja_y + 22, 5.5, color)
-    lienzo.texto(c, MONO, "roxi@shin-md", 13, caja_x + 22, caja_y + 60, P["tinta_tenue"])
-
-    linea1 = "curl -fsSL https://raw.githubusercontent.com/"
-    linea2 = "riokuroxi-svg/Shin-MD/v3.7.0/shin.sh | sh"
-    lienzo.texto(c, MONO, "$", 14, caja_x + 22, caja_y + 92, P["menta"])
-    lienzo.texto(c, MONO, linea1, 14, caja_x + 40, caja_y + 92, "#E9E4F5")
-    lienzo.texto(c, MONO, linea2, 14, caja_x + 22, caja_y + 116, P["sakura"])
-    lienzo.texto(c, MONO, "· descarga, comprueba la huella y arranca", 12.5,
-                 caja_x + 22, caja_y + 140, P["tinta_tenue"])
-    return lienzo.guardar(c, "assets", "destacado.svg")
+    # El área: la misma curva, cerrada contra la base.
+    c.defs_agrega(
+        '<linearGradient id="area" x1="0" y1="0" x2="0" y2="1">'
+        '<stop offset="0" stop-color="%s" stop-opacity="0.55"/>'
+        '<stop offset="1" stop-color="%s" stop-opacity="0.02"/></linearGradient>'
+        % (P["sakura"], P["lila"])
+    )
+    c.camino(d + " L%.1f %.1f L%.1f %.1f Z" % (puntos[-1][0], y0, puntos[0][0], y0),
+             "url(#area)")
+    c.camino(d, "none", trazo=P["sakura_fuerte"], grosor=2.6)
+    # El último punto, marcado: es el que se mira.
+    c.circulo(puntos[-1][0], puntos[-1][1], 4.4, P["sakura_fuerte"])
+    c.circulo(puntos[-1][0], puntos[-1][1], 8.0, "none", trazo=P["sakura"], grosor=1.6,
+              opacidad=0.45)
 
 
-# ═══════════════════════════════════════════════ lenguajes (barras) ══
-# Los porcentajes salen de sumar los bytes de cada lenguaje en los repositorios
-# públicos. Si cambian, se cambian aquí y se vuelve a ejecutar el script.
+def widgets():
+    """1200×150. La franja de estadísticas propia: minigráfica + tres cifras."""
+    ancho, alto = 1200, 150
+    c = Lienzo(ancho, alto, "Estadísticas")
+    lienzo.fondos(c, ancho, alto, gid="stats")
+    lienzo.marco(c, 1, 1, ancho - 2, alto - 2, radio=22, borde=P["borde"], grosor=2)
+
+    # ── izquierda: la actividad de las últimas 12 semanas ──
+    x0, w0 = 56, 440
+    lienzo.texto(c, QUICK, "ACTIVIDAD · 12 SEMANAS", 12.5, x0, 40, P["lila_fuerte"], tracking=3.0)
+
+    # La cifra grande primera y, debajo, la curva: así no se pisan.
+    ancho_delta = lienzo.texto(c, BALOO, DATOS["delta"], 30, x0, 82, P["sakura_fuerte"])
+    lienzo.texto(c, NUNITO, "commits frente al mes pasado", 12.5,
+                 x0 + ancho_delta + 12, 79, P["tinta_suave"])
+    _chispa(c, DATOS["semanas"], x0, 132, w0, 44)
+    c.linea(x0, 132, x0 + w0, 132, P["borde"], 1.6)
+
+    # El separador vertical entre la gráfica y las cifras
+    c.linea(540, 24, 540, alto - 24, P["borde"], 1.6)
+
+    # ── derecha: tres cifras, cada una con su color ──
+    ancho_tarjeta, hueco = 184, 14
+    x = 576
+    for etiqueta, cifra, pie_txt, color in DATOS["tarjetas"]:
+        c.rect(x, 26, ancho_tarjeta, 98, 16, P["papel"], trazo=P["borde"], grosor=1.6)
+        c.rect(x, 26, 5, 98, 3, color)                 # el filo de color
+        lienzo.texto(c, QUICK, etiqueta.upper(), 11, x + 20, 52, P["tinta_tenue"], tracking=2.2)
+        lienzo.texto(c, BALOO, cifra, 32, x + 18, 92, P["tinta"])
+        lienzo.texto(c, NUNITO, pie_txt, 12, x + 20, 114, P["tinta_suave"])
+        x += ancho_tarjeta + hueco
+    return lienzo.guardar(c, "assets", "stats.svg")
+
+
+
+# ══════════════════════════════════════════════════════ el stack, en casa ══
+# Antes esto era una llamada a skillicons.dev: doce iconos servidos por un
+# tercero. Ahora son doce pastillas dibujadas aquí, con el nombre dentro, así
+# que no hay nada que se pueda caer ni cambiar de color sin avisar.
+STACK = [
+    ("JavaScript", "#F0DB4F", "#3A3418"), ("TypeScript", "#3178C6", "#FFFFFF"),
+    ("Node.js", "#5FA04E", "#FFFFFF"), ("Go", "#00ADD8", "#04323C"),
+    ("Python", "#3776AB", "#FFFFFF"), ("SQLite", "#003B57", "#FFFFFF"),
+    ("Bash", "#4EAA25", "#FFFFFF"), ("Docker", "#2496ED", "#FFFFFF"),
+    ("Linux", "#2A2340", "#FFEFD9"), ("Git", "#F05033", "#FFFFFF"),
+    ("GitHub Actions", "#2088FF", "#FFFFFF"), ("VS Code", "#007ACC", "#FFFFFF"),
+]
+
+
+def stack():
+    """1200×132. Dos filas de pastillas con el stack, sin iconos remotos."""
+    ancho, alto = 1200, 132
+    c = Lienzo(ancho, alto, "Stack")
+    lienzo.texto(c, QUICK, "LO QUE USO", 13, 60, 34, P["lila_fuerte"], tracking=3.2)
+
+    columnas = 6
+    ancho_pastilla, hueco_x = 168, 12
+    alto_pastilla, hueco_y = 38, 12
+    x0, y0 = 60, 46
+    for i, (nombre, fondo, tinta) in enumerate(STACK):
+        fila, col = divmod(i, columnas)
+        x = x0 + col * (ancho_pastilla + hueco_x)
+        y = y0 + fila * (alto_pastilla + hueco_y)
+        c.rect(x, y, ancho_pastilla, alto_pastilla, 12, fondo)
+        # El punto de color y el nombre, centrados en la pastilla
+        texto_ancho = QUICK.ancho(nombre, 14.5)
+        lienzo.texto(c, QUICK, nombre, 14.5,
+                     x + (ancho_pastilla - texto_ancho) / 2, y + 25, tinta)
+    return lienzo.guardar(c, "assets", "stack.svg")
+
+
+# ══════════════════════════════════════════════════ las insignias, en casa ══
+# Una función por insignia: name/color. Se dibujan como SVG y el README las
+# envuelve en <a>, así que siguen siendo clicables sin depender de shields.io.
+def insignia(archivo, texto, fondo, tinta, icono=None, ancho=None):
+    texto_ancho = QUICK.ancho(texto, 15, tracking=0.4)
+    ancho = ancho or int(texto_ancho + (72 if icono else 44))
+    alto = 44
+    c = Lienzo(ancho, alto, texto)
+    c.rect(0, 0, ancho, alto, 12, fondo)
+    x_texto = 22
+    if icono == "flor":
+        lienzo.sakura(c, 26, 22, 10, tinta, fondo, giro=14, estambres=False)
+        x_texto = 44
+    elif icono == "estrella":
+        c.agrega(svgkit.estrella(26, 22, 10, tinta))
+        x_texto = 44
+    lienzo.texto(c, QUICK, texto, 15, x_texto, 28, tinta, tracking=0.4)
+    return lienzo.guardar(c, "assets", "insignias", archivo + ".svg")
+
+
+def insignias():
+    """Las cuatro pastillas que antes venían de shields.io."""
+    return [
+        insignia("shin-md", "Shin-MD · v3.7.0", P["sakura_fuerte"], P["papel"], icono="flor"),
+        insignia("licencia", "AGPL-3.0-only", P["lila_fuerte"], P["papel"], icono="estrella"),
+        insignia("kofi", "Invítame un café", P["ambar"], "#4A3410", icono="flor"),
+        insignia("repos", "Repositorios", P["tinta"], P["papel"], icono="estrella"),
+    ]
+
+
+# Pesos reales de los repositorios (GitHub los cuenta por bytes de código).
+# Se actualizan a mano cuando cambian: son cuatro números, no hace falta un
+# servicio que los cuente cada noche.
 LENGUAJES = [
     ("JavaScript", 76.7, P["sakura_fuerte"]),
     ("Go", 16.9, P["lila_fuerte"]),
@@ -389,8 +515,12 @@ def main(partes):
         hechas.append(divisor())
     if not partes or "pie" in partes:
         hechas.append(pie())
-    if not partes or "destacado" in partes:
-        hechas.append(destacado())
+    if not partes or "stats" in partes or "widgets" in partes:
+        hechas.append(widgets())
+    if not partes or "stack" in partes:
+        hechas.append(stack())
+    if not partes or "insignias" in partes:
+        hechas.extend(insignias())
     if not partes or "lenguajes" in partes:
         hechas.append(lenguajes())
     if not partes or "cards" in partes or "tarjetas" in partes:

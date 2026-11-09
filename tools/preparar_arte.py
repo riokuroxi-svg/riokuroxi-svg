@@ -5,19 +5,29 @@ preparar_arte.py — deja las ilustraciones listas para el perfil.
 
     python3 tools/preparar_arte.py
 
-Hace tres cosas, que son las que hay que hacer a mano y siempre se olvidan:
+Las ilustraciones de `assets/src/nuevo/` llegan del tamaño en que se pueden
+conseguir (736 px de ancho), y GitHub las muestra a más de 800. Si se dejan
+así, el navegador las estira y se ven blandas. Aquí se hace lo que sí mejora
+la imagen de verdad, sin inventar detalle:
 
-  1. Portada: recorta las bandas negras del arte original y lo unifica con un
-     duotono suave (ciruela → rosa) para que combine con las piezas
-     vectoriales. Guarda `assets/anime/portada-1200.jpg` a 1200 px de ancho.
-  2. Mascota: recorta la pegatina y le deja el fondo transparente.
-     Guarda `assets/anime/mascota.png`.
-  3. Miniaturas 16:9 de las ilustraciones para las tarjetas de proyecto, a
-     480 px y calidad moderada: van dentro de los SVG como data URI, así que
-     cada KB se paga dos veces (aquí y en base64).
+  1. **Se recortan al encuadre que se va a usar**, encima del sujeto (no al
+     centro geométrico, que corta cabezas).
+  2. **Se reescalan hacia arriba** con LANCZOS a 2–3× el tamaño final, para
+     que el navegador siempre reduzca y nunca amplíe: reducir es lo que se ve
+     nítido.
+  3. **Se afinan** con un `unsharp` suave: sube la acutancia sin el halo
+     blanco que deja pasarse.
+  4. **Se guardan en JPEG 4:4:4** (sin submuestreo de color). En imágenes de
+     neón —que es todo este arte— el 4:2:0 por defecto emborrona los bordes
+     de color; el 4:4:4 los mantiene. Cuesta unos KB más y se nota.
 
-Los arte originales viven en `assets/src/`. Esto solo hace falta si se cambia
-una ilustración; los archivos ya preparados están en el repositorio.
+Salidas (todas en `assets/anime/`):
+
+    portada-arte.jpg        panel derecho de la portada (1:1)
+    sobre-mi.jpg            retrato cuadrado para la columna de «Sobre mí»
+    galeria-1..3.jpg        las tres piezas de la galería (4:5)
+    banda-escritorio.jpg    banda ancha para «Fuera del teclado»
+    thumb-*.jpg             miniaturas 16:9 de las tarjetas de proyecto
 """
 
 from __future__ import annotations
@@ -26,12 +36,16 @@ import os
 import sys
 
 import numpy as np
-from PIL import Image, ImageDraw, ImageEnhance, ImageOps
+from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageOps
 
 AQUI = os.path.dirname(os.path.abspath(__file__))
 RAIZ = os.path.dirname(AQUI)
 SRC = os.path.join(RAIZ, "assets", "src")
+NUEVO = os.path.join(SRC, "nuevo")
 ANIME = os.path.join(RAIZ, "assets", "anime")
+
+SUPER = 3          # cuántas veces se agranda antes de bajar al tamaño final
+CALIDAD = 88
 
 
 def recortar_bandas(im):
@@ -49,48 +63,91 @@ def recortar_bandas(im):
     return im.crop((0, arriba, im.width, abajo))
 
 
-def portada():
-    origen = os.path.join(SRC, "hero_arte.png")
-    if not os.path.exists(origen):
-        print("  · falta %s, se salta la portada" % origen)
-        return
-    im = recortar_bandas(Image.open(origen).convert("RGB"))
-    gris = ImageOps.grayscale(im)
-    duotono = ImageOps.colorize(gris, black=(30, 16, 40), white=(255, 220, 232),
-                                mid=(120, 84, 176))
-    im = Image.blend(im, duotono, 0.32)
-    im = ImageEnhance.Contrast(im).enhance(1.08)
-    im = ImageEnhance.Brightness(im).enhance(1.04)
-    im = im.resize((1200, round(im.height * 1200 / im.width)), Image.LANCZOS)
-    destino = os.path.join(ANIME, "portada-1200.jpg")
-    im.save(destino, "JPEG", quality=84, optimize=True, progressive=True)
-    print("  ✓ %s %s · %d KB" % (destino, im.size, os.path.getsize(destino) // 1024))
+def encuadrar(im, ancho, alto, foco_x=0.5, foco_y=0.5):
+    """Recorta a la proporción pedida alrededor del sujeto.
+
+    `foco_*` dice dónde está lo que no se puede perder: 0 es el borde
+    izquierdo/arriba y 1 el derecho/abajo. Con 0.5 sale centrado; con 0.42
+    sube un poco, que es lo que conviene cuando el sujeto es una cara.
+    """
+    objetivo = ancho / alto
+    actual = im.width / im.height
+    if actual > objetivo:                      # sobra ancho
+        w = round(im.height * objetivo)
+        x = round((im.width - w) * foco_x)
+        im = im.crop((x, 0, x + w, im.height))
+    elif actual < objetivo:                    # sobra alto
+        h = round(im.width / objetivo)
+        y = round((im.height - h) * foco_y)
+        im = im.crop((0, y, im.width, y + h))
+    return im
 
 
-def mascota():
-    origen = os.path.join(SRC, "mascota2.png")
-    if not os.path.exists(origen):
-        print("  · falta %s, se salta la mascota" % origen)
-        return
-    im = Image.open(origen).convert("RGBA")
-    a = np.asarray(im).astype(np.int16)
-    fondo = a[8, 8, :3]
-    # Distancia al color del fondo: lo que está lejos es dibujo, lo que está
-    # cerca desaparece. El corte es suave para no dejar sierra en el borde.
-    dist = np.sqrt(((a[:, :, :3] - fondo) ** 2).sum(axis=2))
-    alfa = np.clip((dist - 26) * 8, 0, 255).astype(np.uint8)
-    im.putalpha(Image.fromarray(alfa))
-    im = im.crop(im.getbbox())
-    im.thumbnail((520, 520), Image.LANCZOS)
-    destino = os.path.join(ANIME, "mascota.png")
-    im.quantize(colors=200, method=Image.FASTOCTREE).save(destino, optimize=True)
-    print("  ✓ %s %s · %d KB" % (destino, im.size, os.path.getsize(destino) // 1024))
+def afinar(im):
+    """Nitidez sin halo: un `unsharp` moderado sobre el canal de luz."""
+    return im.filter(ImageFilter.UnsharpMask(radius=1.6, percent=68, threshold=3))
+
+
+def escalar(im, ancho_final, alto_final):
+    """Sube con LANCZOS y baja al tamaño final: el navegador solo reduce."""
+    grande = im.resize((im.width * SUPER, im.height * SUPER), Image.LANCZOS)
+    grande = afinar(grande)
+    # Un pelín de contraste y color: el arte de neón pierde viveza al comprimir.
+    grande = ImageEnhance.Contrast(grande).enhance(1.04)
+    grande = ImageEnhance.Color(grande).enhance(1.05)
+    return grande.resize((ancho_final, alto_final), Image.LANCZOS)
+
+
+def guardar(im, nombre, calidad=CALIDAD):
+    ruta = os.path.join(ANIME, nombre)
+    im.convert("RGB").save(
+        ruta, "JPEG", quality=calidad, optimize=True, progressive=True,
+        subsampling=0,          # 4:4:4: sin basura de color en los bordes
+    )
+    print("  ✓ %-24s %-11s · %d KB" % (nombre, "%dx%d" % im.size, os.path.getsize(ruta) // 1024))
+    return ruta
+
+
+def preparar(origen, nombre, ancho, alto, foco_x=0.5, foco_y=0.5, calidad=CALIDAD):
+    ruta = os.path.join(NUEVO, origen)
+    if not os.path.exists(ruta):
+        print("  · falta %s, se salta %s" % (ruta, nombre))
+        return None
+    im = recortar_bandas(Image.open(ruta).convert("RGB"))
+    im = encuadrar(im, ancho, alto, foco_x, foco_y)
+    im = escalar(im, ancho, alto)
+    return guardar(im, nombre, calidad)
+
+
+# ══════════════════════════════════════════════════════════════ el arte ══
+def arte():
+    print("Portada y retratos")
+    # El panel de la portada es de 470×500: casi cuadrado. El foco va alto
+    # (0.38) porque lo que hay que ver es la cara y el filo de la katana.
+    preparar("katana.jpg", "portada-arte.jpg", 760, 800, 0.44, 0.36)
+    # Retrato de «Sobre mí»: cuadrado, sobre la cara.
+    preparar("neon.jpg", "sobre-mi.jpg", 720, 720, 0.62, 0.45)
+
+    print("Galería")
+    preparar("glitch-ojos.jpg", "galeria-1.jpg", 640, 800, 0.5, 0.42)
+    preparar("glitch-audifonos.jpg", "galeria-2.jpg", 640, 800, 0.5, 0.35)
+    preparar("glitch-blanco.jpg", "galeria-3.jpg", 640, 800, 0.5, 0.36)
+
+    print("Banda")
+    preparar("escritorio.jpg", "banda-escritorio.jpg", 1760, 680, 0.6, 0.5)
+    # El prado es el único que no viene de `nuevo/`: ya estaba preparado.
+    prado = os.path.join(ANIME, "prado.jpg")
+    if os.path.exists(prado):
+        guardar(Image.open(prado).convert("RGB"), "prado.jpg")
 
 
 def miniaturas():
+    """Miniaturas 16:9 para las tarjetas: van dentro del SVG como data URI,
+    así que cada KB se paga dos veces (aquí y en base64)."""
     pares = [
-        ("portada.jpg", "thumb-portada.jpg"),
-        ("escena.jpg", "thumb-escena.jpg"),
+        ("portada-arte.jpg", "thumb-portada.jpg"),
+        ("galeria-3.jpg", "thumb-blanco.jpg"),
+        ("galeria-1.jpg", "thumb-ojos.jpg"),
         ("gato.jpg", "thumb-gato.jpg"),
         ("prado.jpg", "thumb-prado.jpg"),
     ]
@@ -101,42 +158,29 @@ def miniaturas():
             print("  · falta %s, se salta" % ruta)
             continue
         im = Image.open(ruta).convert("RGB")
-        escala = max(ancho / im.width, alto / im.height)
-        im = im.resize((round(im.width * escala), round(im.height * escala)), Image.LANCZOS)
-        x = (im.width - ancho) // 2
-        y = (im.height - alto) // 2
-        im = im.crop((x, y, x + ancho, y + alto))
-        salida = os.path.join(ANIME, destino)
-        im.save(salida, "JPEG", quality=80, optimize=True, progressive=True)
-        print("  ✓ %s · %d KB" % (salida, os.path.getsize(salida) // 1024))
+        im = encuadrar(im, ancho, alto, 0.5, 0.4)
+        im = im.resize((ancho, alto), Image.LANCZOS)
+        guardar(im, destino, calidad=80)
 
-    # La miniatura de Lab2 es la mascota sobre un degradado sakura.
-    mascara = os.path.join(ANIME, "mascota.png")
-    if os.path.exists(mascara):
-        lienzo = Image.new("RGB", (ancho, alto))
-        lapiz = ImageDraw.Draw(lienzo)
-        for i in range(alto):
-            t = i / (alto - 1)
-            lapiz.line([(0, i), (ancho, i)],
-                       fill=(int(253 + (233 - 253) * t),
-                             int(227 + (150 - 227) * t),
-                             int(236 + (196 - 236) * t)))
-        m = Image.open(mascara).convert("RGBA")
-        m.thumbnail((int(alto * 0.82), int(alto * 0.82)), Image.LANCZOS)
-        lienzo.paste(m, ((ancho - m.width) // 2, (alto - m.height) // 2 + 6), m)
-        salida = os.path.join(ANIME, "thumb-mascota.jpg")
-        lienzo.save(salida, "JPEG", quality=80, optimize=True, progressive=True)
-        print("  ✓ %s · %d KB" % (salida, os.path.getsize(salida) // 1024))
+
+def limpiar_viejas():
+    """Borra lo que ya no se usa: el balcón y la mascota chibi salieron del
+    perfil y no deben quedarse ocupando peso en el repositorio."""
+    fuera = ["escena.jpg", "thumb-escena.jpg", "mascota.png", "thumb-mascota.jpg"]
+    for nombre in fuera:
+        ruta = os.path.join(ANIME, nombre)
+        if os.path.exists(ruta):
+            os.remove(ruta)
+            print("  ✕ %s (ya no se usa)" % nombre)
 
 
 def main():
     os.makedirs(ANIME, exist_ok=True)
-    print("Portada")
-    portada()
-    print("Mascota")
-    mascota()
+    arte()
     print("Miniaturas")
     miniaturas()
+    print("Limpieza")
+    limpiar_viejas()
     print("\nlisto. Después: python3 tools/build_assets.py && python3 tools/preview.py")
     return 0
 

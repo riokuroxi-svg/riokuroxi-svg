@@ -5,9 +5,9 @@ preview.py — junta todas las piezas vectoriales en una sola hoja.
 
     python3 tools/preview.py
 
-Deja `assets/preview.svg` con la cabecera, el divisor, las tarjetas, la barra de
-lenguajes y el pie, uno debajo de otro, para revisar de un vistazo que todo
-cuadra antes de subirlo. No forma parte del perfil.
+Deja `assets/preview.svg` con todas las piezas —cabecera, estadísticas, stack,
+insignias, tarjetas, lenguajes y pie— una debajo de otra, para revisar de un
+vistazo que todo cuadra antes de subirlo. No forma parte del perfil.
 """
 
 from __future__ import annotations
@@ -28,7 +28,10 @@ PIEZAS = [
     ("assets/cards/kuroxi-platform.svg", 580),
     ("assets/cards/lab2experimental.svg", 580),
     ("assets/cards/ginko-covers.svg", 580),
-    ("assets/destacado.svg", 1200),
+    ("assets/stats.svg", 1200),
+    ("assets/stack.svg", 1200),
+    ("assets/insignias/shin-md.svg", 300),
+    ("assets/insignias/licencia.svg", 300),
     ("assets/lenguajes.svg", 1200),
     ("assets/pie.svg", 1200),
 ]

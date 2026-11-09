@@ -5,13 +5,17 @@
 <p>
   <a href="#-sobre-mí">Sobre mí</a> ·
   <a href="#-proyectos">Proyectos</a> ·
+  <a href="#-galería">Galería</a> ·
   <a href="#-lo-que-uso">Stack</a> ·
   <a href="#-ficha">Ficha</a> ·
-  <a href="#-fuera-del-teclado">Fuera del teclado</a> ·
   <a href="#-hablemos">Hablemos</a>
 </p>
 
-<img src="https://readme-typing-svg.demolab.com?font=Fira+Code&weight=600&size=19&duration=3200&pause=900&color=E4668F&center=true&vCenter=true&width=760&lines=Bots+de+WhatsApp+que+no+se+caen;Memoria+local%2C+sin+mandar+nada+a+un+servidor;Anti-ban+nativo+y+pruebas+que+se+ejecutan+de+verdad;Y+un+poco+de+sakura+en+la+terminal" alt=""/>
+<p>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/insignias/shin-md.svg" height="34" alt="Shin-MD v3.7.0"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD/blob/main/LICENSE"><img src="assets/insignias/licencia.svg" height="34" alt="AGPL-3.0-only"/></a>
+  <a href="https://ko-fi.com/kuroxisvg"><img src="assets/insignias/kofi.svg" height="34" alt="Ko-fi"/></a>
+</p>
 
 </div>
 
@@ -21,7 +25,7 @@
 
 <table>
   <tr>
-    <td width="64%" valign="top">
+    <td width="62%" valign="top">
 
 Soy **Roxi** `riokuroxi-svg`, desarrollador y arquitecto de software desde
 **México** 🇲🇽. Mi trabajo es convertir bots de mensajería en sistemas que
@@ -37,18 +41,14 @@ en el momento, sin pedir permiso a una API.
   README se puede medir, hay un archivo en `test/` que la mide.
 - 🇲🇽 **Dónde:** México, con café de olla y una playlist de openings de fondo.
 
-<p>
-  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="https://img.shields.io/badge/Shin--MD-v3.7.0-E4668F?style=for-the-badge&logo=whatsapp&logoColor=white" alt="Shin-MD"/></a>
-  <a href="https://github.com/riokuroxi-svg?tab=repositories"><img src="https://img.shields.io/badge/licencia-AGPL--3.0--only-6E4FB0?style=for-the-badge&logo=gnu&logoColor=white" alt="AGPL-3.0-only"/></a>
-  <a href="https://ko-fi.com/kuroxisvg"><img src="https://img.shields.io/badge/Ko--fi-invítame_un_café-F2BE6B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi"/></a>
-</p>
-
   </td>
-    <td width="36%" align="center" valign="middle">
-      <img src="assets/anime/mascota.png" width="100%" alt="Mascota del perfil: chibi de pelo rosa con sudadera crema"/>
+    <td width="38%" align="center" valign="middle">
+      <img src="assets/anime/sobre-mi.jpg" width="100%" alt="Retrato: una chica de pelo blanco entre glitches lila" style="border-radius:20px"/>
     </td>
   </tr>
 </table>
+
+<img src="assets/stats.svg" width="100%" alt="Actividad, proyectos, pruebas y comandos"/>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
@@ -58,7 +58,7 @@ Todo cuelga de la misma idea: **un núcleo pequeño y honesto**, y encima de él
 cosas que hacen falta.
 
 <p align="center">
-  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/cards/shin-md.svg" width="49%" alt="Shin-MD — bot de WhatsApp multi-device, v3.7.0, 353 pruebas"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/cards/shin-md.svg" width="49%" alt="Shin-MD — bot de WhatsApp multi-device, v3.7.0, 370 pruebas"/></a>
   <a href="https://github.com/riokuroxi-svg/Shin-MD-Go"><img src="assets/cards/shin-md-go.svg" width="49%" alt="Shin-MD-Go — el mismo núcleo en Go sobre whatsmeow"/></a>
   <a href="https://github.com/riokuroxi-svg/kuroxi-platform"><img src="assets/cards/kuroxi-platform.svg" width="49%" alt="kuroxi-platform — mensajería offline con entrega garantizada"/></a>
   <a href="https://github.com/riokuroxi-svg/Lab2experimental"><img src="assets/cards/lab2experimental.svg" width="49%" alt="Lab2 experimental — motor de descargas local"/></a>
@@ -72,7 +72,19 @@ y arranca el bot al terminar. Nada de descargar y ejecutar a ciegas:
 curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.sh | sh
 ```
 
-<img src="assets/anime/escena.jpg" width="100%" alt="Ilustración: una noche de deploy en la azotea" style="border-radius:18px"/>
+<img src="assets/divisor.svg" width="100%" alt=""/>
+
+## 🖼️ Galería
+
+<table>
+  <tr>
+    <td width="33.3%"><img src="assets/anime/galeria-1.jpg" width="100%" alt="Glitch: ojos de neón" style="border-radius:16px"/></td>
+    <td width="33.3%"><img src="assets/anime/galeria-2.jpg" width="100%" alt="Glitch: auriculares y lluvia de píxeles" style="border-radius:16px"/></td>
+    <td width="33.3%"><img src="assets/anime/galeria-3.jpg" width="100%" alt="Glitch: pelo blanco y grietas" style="border-radius:16px"/></td>
+  </tr>
+</table>
+
+<img src="assets/anime/banda-escritorio.jpg" width="100%" alt="Ilustración: una noche de código frente a la ventana" style="border-radius:18px"/>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
 
@@ -80,11 +92,11 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
 
 <div align="center">
 
-<img src="https://skillicons.dev/icons?i=js,ts,nodejs,go,python,sqlite,bash,docker,linux,git,githubactions,vscode&perline=12" alt="Stack"/>
+<img src="assets/stack.svg" width="100%" alt="JavaScript, TypeScript, Node.js, Go, Python, SQLite, Bash, Docker, Linux, Git, GitHub Actions y VS Code"/>
 
 <br/><br/>
 
-<img src="assets/lenguajes.svg" width="100%" alt="JavaScript 77 %, Go 17 %, Shell 3 %, Python 2 %, Rust 2 %"/>
+<img src="assets/lenguajes.svg" width="100%" alt="JavaScript 76,7 %, Go 16,9 %, Shell 2,7 %, Python 1,9 %, Rust 1,5 %"/>
 
 </div>
 
@@ -120,16 +132,6 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.0/shin.s
   </tr>
 </table>
 
-<br/>
-
-<div align="center">
-
-<a href="https://github.com/riokuroxi-svg/Shin-MD">
-  <img src="assets/destacado.svg" width="100%" alt="Shin-MD — v3.7.0, 353 pruebas, AGPL-3.0-only, y el comando de instalación"/>
-</a>
-
-</div>
-
 <img src="assets/anime/prado.jpg" width="100%" alt="Ilustración: un prado de margaritas al amanecer" style="border-radius:18px"/>
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
@@ -164,7 +166,7 @@ roxi@shin-md:~$ neofetch --perfil
        ( o.o )       Núcleo ..... Shin-MD v3.7.0
         > ^ <        Memoria .... SQLite WAL · FTS5
                      Anti-ban ... jitter + aclimatación
-                     Pruebas .... 353 en verde
+                     Pruebas .... 370 en verde
                      Licencia ... AGPL-3.0-only
                      Sakura ..... siempre
 ```
@@ -178,9 +180,9 @@ roxi@shin-md:~$ neofetch --perfil
 ¿Un bot que se cae cada semana? ¿Una migración que da miedo?
 
 <p>
-  <a href="https://github.com/riokuroxi-svg?tab=repositories"><img src="https://img.shields.io/badge/Repositorios-riokuroxi--svg-2A2340?style=for-the-badge&logo=github&logoColor=white" alt="GitHub"/></a>
-  <a href="https://ko-fi.com/kuroxisvg"><img src="https://img.shields.io/badge/Ko--fi-kuroxisvg-F2BE6B?style=for-the-badge&logo=kofi&logoColor=white" alt="Ko-fi"/></a>
-  <a href="https://github.com/riokuroxi-svg/Shin-MD/issues"><img src="https://img.shields.io/badge/Issues-abrir_uno-E4668F?style=for-the-badge&logo=githubissues&logoColor=white" alt="Issues"/></a>
+  <a href="https://github.com/riokuroxi-svg?tab=repositories"><img src="assets/insignias/repos.svg" height="34" alt="Repositorios"/></a>
+  <a href="https://ko-fi.com/kuroxisvg"><img src="assets/insignias/kofi.svg" height="34" alt="Ko-fi"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD/issues"><img src="assets/insignias/licencia.svg" height="34" alt="Issues"/></a>
 </p>
 
 </div>
@@ -188,9 +190,14 @@ roxi@shin-md:~$ neofetch --perfil
 <img src="assets/pie.svg" width="100%" alt="Transformando lógica en estética, un commit a la vez"/>
 
 <!--
-  Las piezas de assets/ (portada, divisor, pie, lenguajes, destacado y tarjetas)
-  se dibujan solas, con código:  python3 tools/build_assets.py   (ver tools/LEEME.md)
-  El texto va convertido a trazado vectorial y la portada lleva su ilustración
-  dentro: se ve igual en cualquier navegador o móvil, sin depender de nada.
-  Las ilustraciones de assets/anime/ son originales de este repositorio.
+  Ninguna pieza de este perfil se sirve desde fuera: ni shields.io, ni
+  github-readme-stats, ni skillicons, ni giphy. Todo —portada, estadísticas,
+  insignias, stack, tarjetas, divisor y pie— se dibuja con código en tools/:
+
+      python3 tools/preparar_arte.py   # ilustraciones (recorte, nitidez, JPEG 4:4:4)
+      python3 tools/build_assets.py    # todas las piezas de assets/
+      python3 tools/preview.py         # hoja de revisión: assets/preview.svg
+
+  El texto va convertido a trazado, así que no depende de ninguna fuente
+  instalada. Las ilustraciones son originales de este repositorio.
 -->

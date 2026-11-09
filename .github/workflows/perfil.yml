@@ -1,0 +1,75 @@
+# ═══════════════════════════════════════════════════════════════════
+#  perfil.yml — el perfil se redibuja solo cuando cambia su código.
+#
+#  Las piezas de assets/ son SVG generados, no archivos dibujados a mano.
+#  Si alguien edita tools/ y sube el cambio sin regenerarlas, el README se
+#  queda enseñando la versión vieja y nadie se entera. Esto lo comprueba en
+#  cada push: regenera, compara y, si hay diferencias, las commitea.
+#
+#  No usa servicios de terceros para las estadísticas (nada de
+#  github-readme-stats): los números viven en tools/build_assets.py, que es
+#  el único sitio que hay que tocar para cambiarlos.
+# ═══════════════════════════════════════════════════════════════════
+name: perfil
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "tools/**"
+      - "assets/src/**"
+      - "README.md"
+      - ".github/workflows/perfil.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  redibujar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Dependencias (Pillow, fontTools y el kanji 反魂)
+        run: |
+          python -m pip install --upgrade pip
+          pip install pillow fonttools
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends fonts-noto-cjk
+
+      - name: Redibujar las piezas
+        run: |
+          python tools/preparar_arte.py
+          python tools/build_assets.py
+
+      - name: Comprobar que no queda ninguna referencia externa
+        run: |
+          # Si alguien vuelve a pegar una imagen servida por un tercero, esto
+          # lo caza. Se miran solo las imágenes (src=), no los enlaces: los
+          # <a href> a GitHub o a Ko-fi son clics, no recursos que cargar.
+          if grep -En '<img[^>]+src="https?://|!\[[^]]*\]\(https?://' README.md; then
+            echo "::error::El README volvió a cargar una imagen de un servicio externo."
+            exit 1
+          fi
+          # Y que ningún SVG enlace a algo que no esté en el repositorio.
+          if grep -REn "href=\"https?://" assets --include="*.svg" | grep -v "<a "; then
+            echo "::error::Algún SVG enlaza recursos de fuera; se verá roto en GitHub."
+            exit 1
+          fi
+
+      - name: Commit si cambió algo
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add -A
+            git commit -m "chore(perfil): redibujar las piezas de assets/"
+            git push
+          else
+            echo "Todo al día: las piezas ya coinciden con tools/."
+          fi
