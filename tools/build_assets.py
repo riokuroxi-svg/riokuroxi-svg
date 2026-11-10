@@ -161,8 +161,8 @@ def pie():
 # Antes estaban escritas a mano en cinco lugares del script y en seis del
 # README, así que el perfil anunciaba «v3.7.0 · 370 pruebas» cuando la
 # suite ya iba por 410. Se cambian aquí y se regenera todo.
-VERSION = "v3.7.6"
-PRUEBAS = "410"
+VERSION = "v3.7.7"
+PRUEBAS = "421"
 COMANDOS = "213"
 
 # ═════════════════════════════════════════════════════════════ tarjetas ══

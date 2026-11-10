@@ -12,7 +12,7 @@
 </p>
 
 <p>
-  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/insignias/shin-md.svg" height="34" alt="Shin-MD v3.7.6"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/insignias/shin-md.svg" height="34" alt="Shin-MD v3.7.7"/></a>
   <a href="https://github.com/riokuroxi-svg/Shin-MD/blob/main/LICENSE"><img src="assets/insignias/licencia.svg" height="34" alt="AGPL-3.0-only"/></a>
   <a href="https://ko-fi.com/kuroxisvg"><img src="assets/insignias/kofi.svg" height="34" alt="Ko-fi"/></a>
 </p>
@@ -58,7 +58,7 @@ Todo cuelga de la misma idea: **un núcleo pequeño y honesto**, y encima de él
 cosas que hacen falta.
 
 <p align="center">
-  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/cards/shin-md.svg" width="49%" alt="Shin-MD — bot de WhatsApp multi-device, v3.7.6, 410 pruebas"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/cards/shin-md.svg" width="49%" alt="Shin-MD — bot de WhatsApp multi-device, v3.7.7, 421 pruebas"/></a>
   <a href="https://github.com/riokuroxi-svg/Shin-MD-Go"><img src="assets/cards/shin-md-go.svg" width="49%" alt="Shin-MD-Go — el mismo núcleo en Go sobre whatsmeow"/></a>
   <a href="https://github.com/riokuroxi-svg/kuroxi-platform"><img src="assets/cards/kuroxi-platform.svg" width="49%" alt="kuroxi-platform — mensajería offline con entrega garantizada"/></a>
   <a href="https://github.com/riokuroxi-svg/Lab2experimental"><img src="assets/cards/lab2experimental.svg" width="49%" alt="Lab2 experimental — motor de descargas local"/></a>
@@ -69,7 +69,7 @@ cosas que hacen falta.
 y arranca el bot al terminar. Nada de descargar y ejecutar a ciegas:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.6/shin.sh | sh
+curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.7/shin.sh | sh
 ```
 
 <img src="assets/divisor.svg" width="100%" alt=""/>
@@ -126,7 +126,7 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.6/shin.s
     <td valign="top"><b>Licencia</b><br/>AGPL-3.0-only</td>
   </tr>
   <tr>
-    <td valign="top"><b>Ahora</b><br/>Shin-MD v3.7.6 en producción</td>
+    <td valign="top"><b>Ahora</b><br/>Shin-MD v3.7.7 en producción</td>
     <td valign="top"><b>Después</b><br/>El mismo núcleo en Go</td>
     <td valign="top"><b>Invítame</b><br/><a href="https://ko-fi.com/kuroxisvg">Ko-fi</a></td>
   </tr>
@@ -163,10 +163,10 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.6/shin.s
 ```zsh
 roxi@shin-md:~$ neofetch --perfil
         /\\_/\\        Sistema .... Debian y Termux
-       ( o.o )       Núcleo ..... Shin-MD v3.7.6
+       ( o.o )       Núcleo ..... Shin-MD v3.7.7
         > ^ <        Memoria .... SQLite WAL · FTS5
                      Anti-ban ... jitter + aclimatación
-                     Pruebas .... 410 en verde
+                     Pruebas .... 421 en verde
                      Licencia ... AGPL-3.0-only
                      Sakura ..... siempre
 ```
