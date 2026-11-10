@@ -111,7 +111,7 @@ def portada():
     x = 64
     for txt, fondo, color in [
         ("Shin-MD", P["sakura_fuerte"], P["papel"]),
-        ("370 pruebas", P["papel"], P["lila_fuerte"]),
+        (f"{PRUEBAS} pruebas", P["papel"], P["lila_fuerte"]),
         ("AGPL-3.0-only", P["menta"], "#1E3B33"),
     ]:
         x += lienzo.pastilla(c, QUICK, txt, x, 388, tam=13, fondo=fondo, color=color) + 9
@@ -157,6 +157,14 @@ def pie():
     return lienzo.guardar(c, "assets", "pie.svg")
 
 
+# ── la versión y las pruebas, en un solo sitio ──────────────────────
+# Antes estaban escritas a mano en cinco lugares del script y en seis del
+# README, así que el perfil anunciaba «v3.7.0 · 370 pruebas» cuando la
+# suite ya iba por 410. Se cambian aquí y se regenera todo.
+VERSION = "v3.7.6"
+PRUEBAS = "410"
+COMANDOS = "213"
+
 # ═════════════════════════════════════════════════════════════ tarjetas ══
 # Cada tarjeta es una pieza de 580×188. `color` pinta el filo y el icono.
 PROYECTOS = [
@@ -165,8 +173,8 @@ PROYECTOS = [
         titulo="Shin-MD",
         lema="反魂",
         texto="Bot de WhatsApp multi-device con núcleo propio: anti-ban nativo, "
-              "memoria SQLite y 213 comandos. Se instala con una línea.",
-        etiquetas=[("v3.7.0", "sakura"), ("370 pruebas", "menta"), ("AGPL-3.0", "lila")],
+              f"memoria SQLite y {COMANDOS} comandos. Se instala con una línea.",
+        etiquetas=[(VERSION, "sakura"), (f"{PRUEBAS} pruebas", "menta"), ("AGPL-3.0", "lila")],
         color=P["sakura_fuerte"],
         miniatura="thumb-portada.jpg",
     ),
@@ -318,8 +326,8 @@ DATOS = dict(
     delta="+38 %",
     tarjetas=[
         ("proyectos", "5", "repos públicos", P["lila_fuerte"]),
-        ("pruebas", "370", "en verde hoy", P["menta"]),
-        ("comandos", "213", "en Shin-MD", P["sakura_fuerte"]),
+        ("pruebas", PRUEBAS, "en verde hoy", P["menta"]),
+        ("comandos", COMANDOS, "en Shin-MD", P["sakura_fuerte"]),
     ],
 )
 
@@ -458,7 +466,7 @@ def insignia(archivo, texto, fondo, tinta, icono=None, ancho=None):
 def insignias():
     """Las cuatro pastillas que antes venían de shields.io."""
     return [
-        insignia("shin-md", "Shin-MD · v3.7.0", P["sakura_fuerte"], P["papel"], icono="flor"),
+        insignia("shin-md", f"Shin-MD · {VERSION}", P["sakura_fuerte"], P["papel"], icono="flor"),
         insignia("licencia", "AGPL-3.0-only", P["lila_fuerte"], P["papel"], icono="estrella"),
         insignia("kofi", "Invítame un café", P["ambar"], "#4A3410", icono="flor"),
         insignia("repos", "Repositorios", P["tinta"], P["papel"], icono="estrella"),
