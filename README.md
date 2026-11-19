@@ -39,6 +39,8 @@ en el momento, sin pedir permiso a una API.
   quien ya se estrelló— y después escribo. Cero código trampa.
 - 🧪 **Cómo lo compruebo:** con pruebas que se ejecutan solas. Si una frase del
   README se puede medir, hay un archivo en `test/` que la mide.
+- 🛡️ **Últimamente:** endurecer lo que ya funciona —auditoría, pruebas de carga
+  hostil y un sello que avisa si una dependencia cambió sola.
 - 🇲🇽 **Dónde:** México, con café de olla y una playlist de openings de fondo.
 
   </td>
@@ -58,7 +60,7 @@ Todo cuelga de la misma idea: **un núcleo pequeño y honesto**, y encima de él
 cosas que hacen falta.
 
 <p align="center">
-  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/cards/shin-md.svg" width="49%" alt="Shin-MD — bot de WhatsApp multi-device, v3.7.9, 433 pruebas"/></a>
+  <a href="https://github.com/riokuroxi-svg/Shin-MD"><img src="assets/cards/shin-md.svg" width="49%" alt="Shin-MD — bot de WhatsApp multi-device, v3.7.9, 614 pruebas"/></a>
   <a href="https://github.com/riokuroxi-svg/Shin-MD-Go"><img src="assets/cards/shin-md-go.svg" width="49%" alt="Shin-MD-Go — el mismo núcleo en Go sobre whatsmeow"/></a>
   <a href="https://github.com/riokuroxi-svg/kuroxi-platform"><img src="assets/cards/kuroxi-platform.svg" width="49%" alt="kuroxi-platform — mensajería offline con entrega garantizada"/></a>
   <a href="https://github.com/riokuroxi-svg/Lab2experimental"><img src="assets/cards/lab2experimental.svg" width="49%" alt="Lab2 experimental — motor de descargas local"/></a>
@@ -126,7 +128,7 @@ curl -fsSL https://raw.githubusercontent.com/riokuroxi-svg/Shin-MD/v3.7.9/shin.s
     <td valign="top"><b>Licencia</b><br/>AGPL-3.0-only</td>
   </tr>
   <tr>
-    <td valign="top"><b>Ahora</b><br/>Shin-MD v3.7.9 en producción</td>
+    <td valign="top"><b>Ahora</b><br/>Shin-MD v3.7.9, ya endurecido</td>
     <td valign="top"><b>Después</b><br/>El mismo núcleo en Go</td>
     <td valign="top"><b>Invítame</b><br/><a href="https://ko-fi.com/kuroxisvg">Ko-fi</a></td>
   </tr>
@@ -166,7 +168,7 @@ roxi@shin-md:~$ neofetch --perfil
        ( o.o )       Núcleo ..... Shin-MD v3.7.9
         > ^ <        Memoria .... SQLite WAL · FTS5
                      Anti-ban ... jitter + aclimatación
-                     Pruebas .... 433 en verde
+                     Pruebas .... 614 en verde
                      Licencia ... AGPL-3.0-only
                      Sakura ..... siempre
 ```

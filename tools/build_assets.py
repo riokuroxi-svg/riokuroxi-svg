@@ -162,8 +162,8 @@ def pie():
 # README, así que el perfil anunciaba «v3.7.0 · 370 pruebas» cuando la
 # suite ya iba por 410. Se cambian aquí y se regenera todo.
 VERSION = "v3.7.9"
-PRUEBAS = "433"
-COMANDOS = "213"
+PRUEBAS = "614"      # test/resumen-suite.json de Shin-MD (18-11-2026)
+COMANDOS = "216"     # scripts/auditar-comandos.mjs de Shin-MD
 
 # ═════════════════════════════════════════════════════════════ tarjetas ══
 # Cada tarjeta es una pieza de 580×188. `color` pinta el filo y el icono.
