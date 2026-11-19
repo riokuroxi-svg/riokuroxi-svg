@@ -42,7 +42,10 @@ jobs:
       - name: Dependencias (Pillow, fontTools y el kanji 反魂)
         run: |
           python -m pip install --upgrade pip
-          pip install pillow fonttools
+          # numpy: preparar_arte.py lo necesita para las imágenes. Faltaba
+          # aquí desde el 10 de noviembre y el workflow llevaba fallando en
+          # silencio en cada push.
+          pip install pillow fonttools numpy
           sudo apt-get update
           sudo apt-get install -y --no-install-recommends fonts-noto-cjk
 
