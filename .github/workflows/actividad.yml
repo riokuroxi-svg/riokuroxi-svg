@@ -75,7 +75,17 @@ jobs:
             git config user.email "riokuroxi-svg@users.noreply.github.com"
             git add tools/estadisticas.json assets/stats.svg
             git commit -m "chore(actividad): cifras de las 12 semanas al día [skip ci]"
-            git push
+            # El workflow perfil puede commitear a la vez que este (los dos
+            # redibujan assets/). Si el push se rechaza, se rebobina sobre lo
+            # que haya arriba y se reintenta en vez de dejar el run en rojo.
+            for intento in 1 2 3; do
+              if git push; then
+                break
+              fi
+              echo "Push rechazado (intento $intento): rebobinando sobre origin/main…"
+              git pull --rebase --autostash --quiet origin main
+              sleep $((intento * 5))
+            done
           else
             echo "Misma actividad que la semana pasada: no se toca nada."
           fi
