@@ -321,9 +321,44 @@ def _tarjeta_vieja(datos):
 #
 # Los números se cambian a mano cuando cambian; el comentario junto a cada
 # uno dice de dónde salen para que se pueda comprobar.
+#
+# `semanas` y `delta` ya no se escriben aquí: los lee `tools/estadisticas.py`
+# de la API de GitHub y los deja en `tools/estadisticas.json`. Si ese archivo
+# no existe (o la API falló y nunca llegó a crearse) se usa el respaldo de
+# abajo, que es la última medida buena conocida. Así el perfil nunca se queda
+# con la franja en blanco.
+ESTADISTICAS_CACHE = os.path.join(os.path.dirname(os.path.abspath(__file__)),
+                                  "estadisticas.json")
+
+RESPALDO_ACTIVIDAD = dict(
+    semanas=[14, 0, 0, 0, 53, 0, 7, 0, 0, 70, 129, 10],
+    delta="— %",
+    delta_num=None,
+    ultimas_4=None,
+)
+
+
+def _actividad():
+    """Las semanas y el delta, del JSON si se puede, del respaldo si no."""
+    try:
+        import json
+        with open(ESTADISTICAS_CACHE, encoding="utf-8") as fh:
+            guardado = json.load(fh)
+        semanas = [int(v) for v in guardado["semanas"]][-12:]
+        if len(semanas) == 12:
+            return dict(
+                semanas=semanas,
+                delta=guardado.get("delta") or RESPALDO_ACTIVIDAD["delta"],
+                delta_num=guardado.get("delta_num"),
+                ultimas_4=guardado.get("ultimas_4"),
+            )
+    except Exception:
+        pass
+    return dict(RESPALDO_ACTIVIDAD)
+
+
 DATOS = dict(
-    semanas=[7, 11, 9, 16, 14, 21, 19, 26, 24, 31, 28, 34],
-    delta="+38 %",
+    actividad=_actividad(),
     tarjetas=[
         ("proyectos", "5", "repos públicos", P["lila_fuerte"]),
         ("pruebas", PRUEBAS, "en verde hoy", P["menta"]),
@@ -332,7 +367,7 @@ DATOS = dict(
 )
 
 
-def _chispa(c, valores, x0, y0, ancho, alto):
+def _chispa(c, valores, x0, y0, ancho, alto, animar=False, clave="a"):
     """Una minigráfica de las de verdad: área rellena y línea encima.
 
     No es una imagen de un servicio: son dos `path` calculados con los
@@ -363,13 +398,79 @@ def _chispa(c, valores, x0, y0, ancho, alto):
         '<stop offset="1" stop-color="%s" stop-opacity="0.02"/></linearGradient>'
         % (P["sakura"], P["lila"])
     )
-    c.camino(d + " L%.1f %.1f L%.1f %.1f Z" % (puntos[-1][0], y0, puntos[0][0], y0),
-             "url(#area)")
-    c.camino(d, "none", trazo=P["sakura_fuerte"], grosor=2.6)
-    # El último punto, marcado: es el que se mira.
-    c.circulo(puntos[-1][0], puntos[-1][1], 4.4, P["sakura_fuerte"])
-    c.circulo(puntos[-1][0], puntos[-1][1], 8.0, "none", trazo=P["sakura"], grosor=1.6,
+    area = d + " L%.1f %.1f L%.1f %.1f Z" % (puntos[-1][0], y0, puntos[0][0], y0)
+    ultimo = (puntos[-1][0], puntos[-1][1])
+
+    if not animar:
+        c.camino(area, "url(#area)")
+        c.camino(d, "none", trazo=P["sakura_fuerte"], grosor=2.6)
+        c.circulo(ultimo[0], ultimo[1], 4.4, P["sakura_fuerte"])
+        c.circulo(ultimo[0], ultimo[1], 8.0, "none", trazo=P["sakura"], grosor=1.6,
+                  opacidad=0.45)
+        return
+
+    # ── con animación ────────────────────────────────────────────────────
+    # GitHub NO ejecuta scripts dentro de un SVG: no hay JavaScript que valga.
+    # Lo que sí respeta son las animaciones declarativas de SMIL (animate /
+    # animateTransform), que son parte del propio archivo.
+    #
+    # Qué se anima, y por qué así:
+    #   · el área sube desde la base (el alto del recorte crece de 0 a tope),
+    #   · la curva se dibuja de izquierda a derecha (stroke-dashoffset),
+    #   · el punto final late una vez al terminar, para dirigir la mirada.
+    # Todo con `fill="freeze"`: se anima una vez y se queda quieto, así el SVG
+    # sigue siendo válido como imagen estática en cualquier visor.
+    #
+    # El trazo va con `pathLength="1"`: la longitud del camino queda
+    # normalizada a 1 y el dash se escribe en esas unidades, así no hay que
+    # recalcular píxeles si cambian los datos. (Mezclar `pathLength="1"` con
+    # un dash en píxeles deja la curva pintada desde el principio.)
+    lento, medio = 1.2, 1.3
+
+    c.defs_agrega(
+        '<clipPath id="crece-%s"><rect x="%.1f" y="%.1f" width="%.1f" height="%.1f">'
+        '<animate attributeName="height" from="0" to="%.1f" dur="%.1fs" '
+        'begin="0.1s" fill="freeze" calcMode="spline" keySplines="0.22 1 0.36 1" '
+        'keyTimes="0;1"/></rect></clipPath>'
+        % (clave, x0 - 6, y0 - alto - 10, ancho + 12, alto + 12, alto + 12, lento)
+    )
+    c.defs_agrega(
+        '<style>.tinta-%s{stroke-dasharray:1;stroke-dashoffset:0;'
+        'animation:dibuja-%s %.1fs cubic-bezier(.22,1,.36,1) .15s forwards}'
+        '@keyframes dibuja-%s{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}'
+        '@media (prefers-reduced-motion:reduce){.tinta-%s{animation:none;'
+        'stroke-dashoffset:0}}</style>'
+        % (clave, clave, medio, clave, clave)
+    )
+
+    c.agrega('<g clip-path="url(#crece-%s)">' % clave)
+    c.camino(area, "url(#area)")
+    c.agrega("</g>")
+    # `pathLength` normaliza el largo: así el dash no depende de la geometría.
+    c.agrega(
+        '<path d="%s" fill="none" stroke="%s" stroke-width="2.6" '
+        'stroke-linecap="round" stroke-linejoin="round" pathLength="1" '
+        'stroke-dasharray="1" stroke-dashoffset="0" class="tinta-%s"/>'
+        % (d, svgkit.esc(P["sakura_fuerte"]), clave)
+    )
+    c.circulo(ultimo[0], ultimo[1], 4.4, P["sakura_fuerte"])
+    c.circulo(ultimo[0], ultimo[1], 8.0, "none", trazo=P["sakura"], grosor=1.6,
               opacidad=0.45)
+    # El pulso final del punto.
+    c.agrega(
+        '<circle cx="%.1f" cy="%.1f" r="4.4" fill="none" stroke="%s" '
+        'stroke-width="1.6" opacity="0">'
+        '<animate attributeName="r" values="4.4;13;4.4" keyTimes="0;0.5;1" '
+        'dur="1.6s" begin="1.45s" repeatCount="1" fill="freeze"/>'
+        '<animate attributeName="opacity" values="0.55;0;0.55" keyTimes="0;0.5;1" '
+        'dur="1.6s" begin="1.45s" repeatCount="1" fill="freeze"/></circle>'
+        % (ultimo[0], ultimo[1], svgkit.esc(P["sakura"]))
+    )
+
+
+# La animación se puede apagar (útil para comparar o para un visor raro):
+#   python3 tools/build_assets.py stats --estatico
+ANIMAR = "--estatico" not in sys.argv
 
 
 def widgets():
@@ -380,14 +481,30 @@ def widgets():
     lienzo.marco(c, 1, 1, ancho - 2, alto - 2, radio=22, borde=P["borde"], grosor=2)
 
     # ── izquierda: la actividad de las últimas 12 semanas ──
+    act = DATOS["actividad"]
     x0, w0 = 56, 440
     lienzo.texto(c, QUICK, "ACTIVIDAD · 12 SEMANAS", 12.5, x0, 40, P["lila_fuerte"], tracking=3.0)
 
-    # La cifra grande primera y, debajo, la curva: así no se pisan.
-    ancho_delta = lienzo.texto(c, BALOO, DATOS["delta"], 30, x0, 82, P["sakura_fuerte"])
-    lienzo.texto(c, NUNITO, "commits frente al mes pasado", 12.5,
+    # La cifra grande primero y, debajo, la curva: así no se pisan.
+    # La cifra se «escribe» con un recorte que se abre de izquierda a derecha
+    # (el texto va a trazado, así que no se puede interpolar el número: se
+    # revela, que es lo que se ve igual de bien y no engaña a nadie).
+    ancho_delta = BALOO.ancho(act["delta"], 30) if hasattr(BALOO, "ancho") else 120
+    if ANIMAR:
+        c.defs_agrega(
+            '<clipPath id="escribe-cifra"><rect x="%.1f" y="40" width="%.1f" height="56">'
+            '<animate attributeName="width" from="0" to="%.1f" dur="0.85s" '
+            'begin="0.05s" fill="freeze" calcMode="spline" '
+            'keySplines="0.22 1 0.36 1" keyTimes="0;1"/></rect></clipPath>'
+            % (x0 - 4, ancho_delta + 10, ancho_delta + 10)
+        )
+        c.agrega('<g clip-path="url(#escribe-cifra)">')
+    lienzo.texto(c, BALOO, act["delta"], 30, x0, 82, P["sakura_fuerte"])
+    if ANIMAR:
+        c.agrega("</g>")
+    lienzo.texto(c, NUNITO, "commits · últimas 4 semanas vs. las 4 previas", 12.5,
                  x0 + ancho_delta + 12, 79, P["tinta_suave"])
-    _chispa(c, DATOS["semanas"], x0, 132, w0, 44)
+    _chispa(c, act["semanas"], x0, 132, w0, 44, animar=ANIMAR, clave="act")
     c.linea(x0, 132, x0 + w0, 132, P["borde"], 1.6)
 
     # El separador vertical entre la gráfica y las cifras

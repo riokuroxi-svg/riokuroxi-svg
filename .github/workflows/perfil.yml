@@ -7,8 +7,9 @@
 #  cada push: regenera, compara y, si hay diferencias, las commitea.
 #
 #  No usa servicios de terceros para las estadísticas (nada de
-#  github-readme-stats): los números viven en tools/build_assets.py, que es
-#  el único sitio que hay que tocar para cambiarlos.
+#  github-readme-stats): el arte y los números de las tarjetas viven en
+#  tools/build_assets.py; los de la franja de actividad salen de
+#  tools/estadisticas.json, que refresca el workflow actividad.yml.
 # ═══════════════════════════════════════════════════════════════════
 name: perfil
 
