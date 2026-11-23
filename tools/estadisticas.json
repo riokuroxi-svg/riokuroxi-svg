@@ -2,15 +2,14 @@
  "_nota": "Lo escribe tools/estadisticas.py desde la API de GitHub. No editar a mano.",
  "usuario": "riokuroxi-svg",
  "repos": [
-  "riokuroxi-svg",
   "Shin-MD",
   "Shin-MD-Go",
+  "riokuroxi-svg",
   "kuroxi-platform",
   "Lab2experimental",
   "Ginko-Covers"
  ],
  "semanas": [
-  14,
   0,
   0,
   1,
@@ -21,12 +20,13 @@
   0,
   70,
   129,
-  16
+  30,
+  0
  ],
  "semana_parcial": true,
- "ultimas_4": 199,
- "cuatro_anteriores": 61,
- "delta": "+226 %",
- "delta_num": 226,
- "actualizado": "2026-11-19"
+ "ultimas_4": 229,
+ "cuatro_anteriores": 60,
+ "delta": "+282 %",
+ "delta_num": 282,
+ "actualizado": "2026-11-23"
 }
